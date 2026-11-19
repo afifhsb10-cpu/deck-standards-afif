@@ -1,0 +1,9 @@
+{
+  "style": ", studio photograph on a seamless plain pure white backdrop, isolated subject, nothing else in frame, soft even lighting, crisp edges, high contrast, sharp focus, realistic, true-to-life proportions, anatomically correct hands, no text, no letters, no logos, no watermark",
+  "jobs": {
+    "cover": {"size": [1024, 1024], "prompt": "side view, full body: a man in a shirt kneeling beside a man lying on his back on the floor, performing CPR chest compressions with straight locked arms and hands stacked on the center of the chest"},
+    "recognize": {"size": [1344, 768], "prompt": "medium shot: a man lies motionless on his back on the floor, a woman kneels at his side and leans over him, both of her hands placed firmly on top of his two shoulders, tapping his shoulders while calling out loudly to him, her hands clearly on his shoulders"},
+    "compress": {"size": [1024, 1024], "prompt": "top-down view: two hands stacked with fingers interlocked, the heel of the lower hand pressing on the center of the bare chest of a CPR training manikin torso, straight arms entering from the top of the frame"},
+    "aed": {"size": [1024, 1024], "prompt": "top view product photograph of an automated external defibrillator device with its two adhesive electrode pads and cables laid out beside it"}
+  }
+}
