@@ -6,20 +6,22 @@ Standar pembuatan deck presentasi untuk Claude Code. Setiap sesi Claude Code yan
 
 ```text
 CLAUDE.md                              # instruksi repo: muat skill ini untuk setiap deck
+package.json                           # dependency build (npm install di root)
 .claude/skills/deck-house-style/
-├── SKILL.md                           # alur kerja, larangan, aturan tipe/warna/grid, QA
+├── SKILL.md                           # alur kerja: dunia visual per tema, larangan, gambar, QA
 ├── reference/
-│   ├── genres.md                      # genre pack untuk deck (palet, tipe, komposisi)
+│   ├── genres.md                      # genre pack sebagai titik awal (palet, tipe, komposisi)
 │   └── image-pipeline.md              # NVIDIA FLUX klein: endpoint, parameter, resep prompt
-├── scripts/
-│   ├── gen_images.py                  # generate varian gambar dari file jobs.json
-│   ├── jobs.example.json              # contoh job gambar
-│   ├── contact_sheet.py               # lembar pratinjau untuk memilih varian
-│   ├── halftone.py                    # foto → figur halftone transparan (tinta/kertas/merah)
-│   ├── check_pptx.py                  # cek hal yang bikin PowerPoint minta "Repair"
-│   └── setup_qa_fonts.sh              # alias Arial Black → Archivo Black untuk QA jujur
-└── examples/
-    └── bls-field-manual.build.js      # contoh deck lengkap (BLS, gaya manual lapangan)
+└── scripts/
+    ├── gen_images.py                  # generate varian gambar dari images.jobs.json
+    ├── contact_sheet.py               # lembar pratinjau untuk memilih varian
+    ├── halftone.py                    # foto → figur halftone transparan
+    ├── photo_grade.py                 # foto → crop, tint, fade ke warna latar
+    ├── check_pptx.py                  # cek hal yang bikin PowerPoint minta "Repair"
+    └── setup_qa_fonts.sh              # alias Arial Black → Archivo Black untuk QA jujur
+decks/                                 # contoh kerja: .pptx + build.js + aset + studi kasus
+├── modus-senyap/                      # dunia sinematik malam, foto ber-fade, satu cahaya amber
+└── bls-5-menit-pertama/               # dunia manual lapangan, figur halftone, data digambar
 ```
 
 ## Cara pakai
@@ -28,7 +30,7 @@ Buka sesi Claude Code dengan repo ini, lalu minta deck seperti biasa, misalnya:
 
 > Buatkan deck safety talk 8 slide tentang bahaya listrik di area kerja.
 
-Claude akan menulis *design read* satu baris, memilih satu genre, membuat gambar lewat NVIDIA FLUX klein, menyusun deck, lalu menjalankan QA sebelum menyerahkan file.
+Claude akan merancang dunia visual dari temanya (adegan, cahaya, satu warna sinyal, suara tipe, perlakuan gambar, satu motif), memakai genre pack terdekat sebagai titik awal, membuat gambar lewat NVIDIA FLUX klein, menyusun deck, lalu menjalankan QA sebelum menyerahkan file.
 
 ## Sumber prinsip
 

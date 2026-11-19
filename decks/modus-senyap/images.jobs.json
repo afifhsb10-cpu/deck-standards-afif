@@ -1,0 +1,87 @@
+{
+ "style": ", realistic documentary photograph, editorial photojournalism, natural available light at night, warm amber practical light mixed with cool blue ambient tones, sharp focus on the subject, natural textures, true-to-life colors and proportions, 35mm lens, f/2, high ISO, no text, no logos, no watermark",
+ "jobs": {
+  "cover": {
+   "size": [
+    1344,
+    768
+   ],
+   "prompt": "a lone office worker in a shirt standing on an empty wide city sidewalk at night under a single streetlight, looking down at his smartphone, seen from a distance, office towers softly out of focus behind him, the man placed on the right third of the frame, wide shot"
+  },
+  "warmup": {
+   "size": [
+    1344,
+    768
+   ],
+   "prompt": "three smartphones lying on a dark wooden table at night next to a cup of coffee, their screens glowing but out of focus, top-down view"
+  },
+  "silent": {
+   "size": [
+    832,
+    1152
+   ],
+   "prompt": "a smartphone lying face down on a wooden office desk at night, lit by a warm desk lamp, empty office chairs and dark windows in the background, quiet"
+  },
+  "bts": {
+   "size": [
+    832,
+    1152
+   ],
+   "prompt": "an unmarked white van parked alone in an outdoor office parking lot at night under an amber sodium streetlight, a small antenna on its roof, an office tower with lit windows behind, wet asphalt, wide shot"
+  },
+  "transfer": {
+   "size": [
+    832,
+    1152
+   ],
+   "prompt": "a young Indonesian man sitting on a sofa in a dim living room at night, looking down at his smartphone with a puzzled, worried expression, his face lit by the screen, the screen facing away from the camera"
+  },
+  "mule": {
+   "size": [
+    832,
+    1152
+   ],
+   "prompt": "close-up of one hand sliding a plain bank debit card across a dark wooden table under a warm amber lamp, the hand relaxed and natural, background dark and out of focus"
+  },
+  "nfc": {
+   "size": [
+    832,
+    1152
+   ],
+   "prompt": "close-up product photograph of a plain blank debit card resting against the back of a black smartphone lying on a dark table, warm amber rim light, dark background"
+  },
+  "simswap": {
+   "size": [
+    832,
+    1152
+   ],
+   "prompt": "macro photograph of a black smartphone on a dark desk with its SIM card tray pulled out, a small SIM card and a metal ejector pin lying beside it, warm desk lamp light"
+  },
+  "golden": {
+   "size": [
+    832,
+    1152
+   ],
+   "prompt": "early morning golden sunrise over a city skyline seen through a tall office window, warm sunlight entering a dark empty office"
+  },
+  "closing": {
+   "size": [
+    1344,
+    768
+   ],
+   "prompt": "an empty city street at night after rain, amber streetlights reflecting on wet asphalt, distant lit buildings, wide shot, large empty dark sky on the left side of the frame"
+  }
+ },
+ "_picked": {
+  "cover": "cover_7",
+  "warmup": "warmup_7",
+  "silent": "silent_7",
+  "bts": "bts_63",
+  "transfer": "transfer_63",
+  "mule": "mule_21",
+  "nfc": "nfc_63",
+  "simswap": "simswap_21",
+  "golden": "golden_63",
+  "closing": "closing_7"
+ }
+}

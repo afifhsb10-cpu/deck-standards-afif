@@ -1,20 +1,28 @@
-// Reference implementation of the deck-house-style standard (BLS "field manual" deck).
-// Paths to assets, the pptx skill's apply_theme.js and the notes source are from the session that built it:
-// adapt them before reuse. Patterns worth copying: masthead layouts, rule() with flip normalisation,
-// ledger / instrument-panel helpers, halftone figure placement on the baseline rule.
 const pptxgen = require("pptxgenjs");
 const React = require("react");
 const RDS = require("react-dom/server");
 const sharp = require("sharp");
 const fs = require("fs");
-const { applyTheme } = require("/root/.claude/skills/synced/d58f7d14-7c85-49c3-8e4a-1ced79dfb219_1bc288b5-2658-4452-b56d-9c6c08aad2e9/pptx/scripts/apply_theme.js");
+const path = require("path");
+// Locate the pptx skill's apply_theme.js: $PPTX_SKILL_DIR, or the skills synced into a Claude Code cloud session.
+function findApplyTheme() {
+  const cands = [];
+  if (process.env.PPTX_SKILL_DIR) cands.push(path.join(process.env.PPTX_SKILL_DIR, "scripts/apply_theme.js"));
+  for (const base of ["/root/.claude/skills/synced", path.join(require("os").homedir(), ".claude/skills")]) {
+    if (!fs.existsSync(base)) continue;
+    cands.push(path.join(base, "pptx/scripts/apply_theme.js"));
+    for (const d of fs.readdirSync(base)) cands.push(path.join(base, d, "pptx/scripts/apply_theme.js"));
+  }
+  const hit = cands.find((p) => fs.existsSync(p));
+  if (!hit) throw new Error("apply_theme.js not found: set PPTX_SKILL_DIR to the pptx skill folder");
+  return hit;
+}
+const { applyTheme } = require(findApplyTheme());
 
 const A = (f) => __dirname + "/assets/" + f;
 const OUT = process.argv[2] || "bls2.pptx";
 
-// Notes carried over from v1 (same content, new design)
-const OLD = fs.readFileSync(__dirname + "/../bls/build.js", "utf8");
-const NOTES = [...OLD.matchAll(/s\.addNotes\("((?:[^"\\]|\\.)*)"\)/g)].map((m) => JSON.parse('"' + m[1] + '"'));
+const NOTES = JSON.parse(fs.readFileSync(__dirname + "/notes.json", "utf8"));
 
 // World: emergency field manual — aged paper, ink, one signal red, visible grid.
 const HEX = { ink: "141414", paper: "F2F1EC", night: "1B1B18", panel: "E6E4DC", red: "DA291C", ink2: "6E6C64", ruleDark: "4A4944", white: "FFFFFF", mutedDark: "A8A69E" };
