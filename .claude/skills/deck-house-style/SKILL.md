@@ -106,6 +106,8 @@ Proven pattern — **the guide line** (decks/value-stream-mind-id):
 - Constant line speed (inches/second) so wipe and motion stay in sync; corners as quarter arcs with a 90° spin of the marker.
 - Put the marker **under** the waypoint discs so arriving never hides the number.
 
+**When the user wants to paste the animation as one object** (GIF/video instead of PowerPoint animations): build the slide as an HTML scene with a deterministic `render(t)` (SVG path for the route, `getPointAtLength` for the marker and its heading), capture frames with Playwright, encode MP4 + GIF with ffmpeg, and wrap the GIF in a one-slide .pptx. Template: [decks/value-stream-flight-gif](../../../decks/value-stream-flight-gif/README.md) (`scene.html`, `render.js`, `make_pptx.js`). Flat FLUX illustrations rely on white parts — keep a white ground or they break apart when the background is removed.
+
 Mechanics: pptxgenjs cannot write animations. Name every animated shape (`objectName`), write a spec, and run `scripts/add_animation.py deck.pptx spec.json` after `applyTheme`. Motion paths are offsets from the shape's **original** position in slide fractions (write each click's path from the origin). QA with `scripts/storyboard.py deck.pptx spec.json OUT --mover <name>` (frame per click + `preview.gif`) because LibreOffice renders only the final state. Tell the user to play it once in PowerPoint for timing.
 
 ## 6. QA — required before delivering

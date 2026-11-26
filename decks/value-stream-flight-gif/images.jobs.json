@@ -1,0 +1,75 @@
+{
+ "style": ", flat 2D vector illustration, simple geometric shapes, clean minimal modern editorial style, consistent icon set, limited color palette of warm golden yellow, light sky blue, white and light grey, no dark colors, no outlines, no gradients, no shadows, single centered subject, plain solid pure white background, no text, no letters, no numbers, no logos, no watermark",
+ "jobs": {
+  "vs1": {
+   "size": [
+    1024,
+    768
+   ],
+   "prompt": "a folded paper map with a dotted route line between two location pins, next to a small calendar page"
+  },
+  "vs2": {
+   "size": [
+    1024,
+    768
+   ],
+   "prompt": "two blank airline tickets fanned out with simple colored stripes only, beside a small stack of coins and a blank price tag with no writing"
+  },
+  "vs3": {
+   "size": [
+    1024,
+    768
+   ],
+   "prompt": "a closed blank passport booklet with a simple round emblem, a round rubber stamp, and a blank document page with a check mark, no writing anywhere"
+  },
+  "vs6": {
+   "size": [
+    1024,
+    768
+   ],
+   "prompt": "three travelers standing together with rolling suitcases, one of them holding a small tour guide flag"
+  },
+  "vs4": {
+   "size": [
+    1024,
+    768
+   ],
+   "prompt": "an open suitcase with neatly packed folded clothes and a checklist clipboard beside it"
+  },
+  "vs9": {
+   "size": [
+    1024,
+    768
+   ],
+   "prompt": "an airport security walk-through scanner gate with a shield shape and a bag on a short conveyor belt"
+  },
+  "vs10": {
+   "size": [
+    1024,
+    768
+   ],
+   "prompt": "a smartphone with an abstract flight status screen of simple bars, beside a small weather cloud with a sun"
+  },
+  "vs8": {
+   "size": [
+    1024,
+    768
+   ],
+   "prompt": "a smartphone with two speech bubbles connected by a dotted line to a small house"
+  },
+  "vs5": {
+   "size": [
+    1024,
+    768
+   ],
+   "prompt": "a clipboard with a bar chart, a target with an arrow in the center, and a stopwatch"
+  },
+  "vs7": {
+   "size": [
+    1024,
+    768
+   ],
+   "prompt": "an open notebook with a glowing light bulb above it and a pencil"
+  }
+ }
+}

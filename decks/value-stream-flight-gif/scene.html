@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Value Stream Flight</title>
+<style>
+  @font-face { font-family: Barlow; font-weight: 400; src: url(fonts/Barlow-Regular.ttf); }
+  @font-face { font-family: Barlow; font-weight: 500; src: url(fonts/Barlow-Medium.ttf); }
+  @font-face { font-family: Barlow; font-weight: 600; src: url(fonts/Barlow-SemiBold.ttf); }
+  @font-face { font-family: Barlow; font-weight: 700; src: url(fonts/Barlow-Bold.ttf); }
+  :root {
+    --ground: #FFFFFF; --ink: #1C1F24; --muted: #5F6772; --ghost: #C9CED4;
+    --signal: #FFC629; --signal-deep: #E0A800; --hair: #E6E8EB;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1920px; height: 1080px; background: var(--ground); overflow: hidden; }
+  body { font-family: Barlow, sans-serif; color: var(--ink); position: relative; }
+  .abs { position: absolute; }
+  .masthead { left: 86px; top: 46px; font-size: 17px; font-weight: 600; letter-spacing: .22em; color: var(--muted); }
+  h1 { left: 86px; top: 74px; font-size: 52px; font-weight: 600; letter-spacing: -.01em; line-height: 1.05; }
+  .sub { left: 86px; top: 142px; width: 1460px; font-size: 22px; line-height: 1.4; color: var(--muted); }
+  .phase { height: 34px; padding: 0 16px 0 12px; border-radius: 6px; background: var(--ink); color: var(--signal);
+           font-size: 16px; font-weight: 700; letter-spacing: .16em; display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+  .phase svg { width: 18px; height: 18px; }
+  .illus { width: 190px; height: 132px; object-fit: contain; }
+  .step { width: 318px; }
+  .step .en { font-size: 14px; font-weight: 700; letter-spacing: .14em; color: var(--muted); }
+  .step .t { margin-top: 4px; font-size: 23px; font-weight: 600; line-height: 1.15; }
+  .step .d { margin-top: 6px; font-size: 17px; line-height: 1.32; color: var(--muted); }
+  .step .m { margin-top: 7px; font-size: 17px; line-height: 1.3; font-weight: 600; }
+  .step .m b { font-weight: 700; background: var(--signal); padding: 0 5px; border-radius: 3px; margin-right: 4px; }
+  .gate { width: 58px; height: 42px; border-radius: 7px; background: var(--signal); color: var(--ink);
+          font-size: 25px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 3px var(--ground); }
+  .gate.ghost { background: var(--ground); color: var(--ghost); border: 2px dashed var(--ghost); box-shadow: none; }
+  .halo { width: 120px; height: 120px; border-radius: 50%; background: var(--signal); }
+  .key { left: 86px; top: 1000px; display: flex; align-items: center; gap: 18px; }
+  .key .tag { background: var(--ink); color: var(--signal); font-size: 15px; font-weight: 700; letter-spacing: .18em; padding: 7px 12px; border-radius: 5px; }
+  .key .msg { font-size: 25px; font-weight: 600; }
+  .src { right: 86px; top: 1046px; font-size: 14px; color: var(--muted); }
+  svg.route { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+</style>
+</head>
+<body>
+  <div class="abs masthead">VALUE STREAM MIND ID &nbsp;·&nbsp; ANALOGI PERJALANAN UDARA</div>
+  <h1 class="abs">Menjalankan MIND ID seperti satu perjalanan udara</h1>
+  <div class="abs sub">Dari sudut pandang kita sebagai penumpang, sepuluh value stream adalah langkah yang kita jalani dari merencanakan perjalanan hingga tiba dan mengevaluasinya. Nomor menunjukkan value stream.</div>
+
+  <svg class="route" id="svg">
+    <path id="ghost" fill="none" stroke="var(--ghost)" stroke-width="3" stroke-dasharray="10 9" stroke-linecap="round"/>
+    <path id="flown" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <svg class="route" id="planeSvg">
+    <circle id="start" r="9" fill="var(--ground)" stroke="var(--ink)" stroke-width="4"/>
+    <g id="pin" opacity="0">
+      <path d="M0 0 C -5 -11 -22 -22 -22 -38 A 22 22 0 1 1 22 -38 C 22 -22 5 -11 0 0 Z" fill="var(--ink)"/>
+      <circle cy="-38" r="9" fill="var(--signal)"/>
+    </g>
+    <!-- airliner pointing right, 24-unit icon scaled -->
+    <g id="plane"><g transform="scale(3.3) rotate(90) translate(-12 -12)">
+      <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"
+            fill="var(--signal)" stroke="var(--ink)" stroke-width=".9" stroke-linejoin="round"/>
+    </g></g>
+  </svg>
+  <div id="layer"></div>
+  <div class="abs key" id="key" style="opacity:0"><span class="tag">PESAN KUNCI</span>
+    <span class="msg">Perjalanan berhasil bila setiap langkah dijalankan dengan baik dan saling terhubung. Begitu pula MIND ID.</span></div>
+  <div class="abs src">Sumber: SoD Topic Mapping #1 sampai #10</div>
+
+<script>
+const STEPS = [
+  { vs: 1, en: "STRATEGY TO PLAN", t: "Merancang itinerary", d: "Menentukan tujuan, rute, jadwal, dan maskapai yang akan dipakai.", m: "RJPP dan RKAP" },
+  { vs: 2, en: "INVEST TO VALUE", t: "Memilih tiket sepadan", d: "Menimbang harga, kelas, dan manfaat sebelum membeli tiket.", m: "Gate review dan akuisisi" },
+  { vs: 3, en: "PERMIT TO OPERATE", t: "Mengurus paspor dan visa", d: "Memastikan dokumen perjalanan lengkap dan sah sebelum berangkat.", m: "Izin, lingkungan, kebijakan" },
+  { vs: 6, en: "HIRE TO RETIRE", t: "Menyiapkan rombongan", d: "Menentukan siapa yang ikut, membagi peran, dan menyewa pemandu.", m: "Talenta organik dan TAD" },
+  { vs: 4, en: "ASSET TO PRODUCTIVITY", t: "Mengecek koper dan bawaan", d: "Mendata barang bawaan dan memastikan semuanya siap dipakai.", m: "Aset MIND ID dan AH" },
+  { vs: 9, en: "DETECT TO PROTECT", t: "Melewati cek keamanan", d: "Memastikan bawaan aman dan memahami prosedur darurat.", m: "WBS, illegal mining, BCMS" },
+  { vs: 10, en: "DATA TO DECISION", t: "Memantau info penerbangan", d: "Membaca aplikasi, papan jadwal, dan cuaca sebelum mengambil keputusan.", m: "Analitik data dan TI/OT" },
+  { vs: 8, en: "NARRATIVE TO TRUST", t: "Mengabari keluarga", d: "Memberi kabar jadwal dan posisi agar keluarga dan penjemput tenang.", m: "Komunikasi korporat" },
+  { vs: 5, en: "TARGET TO PERFORMANCE", t: "Menilai hasil perjalanan", d: "Mengecek ketepatan waktu, biaya, dan agenda yang tercapai.", m: "KPI kolegial dan kinerja AH" },
+  { vs: 7, en: "IDEA TO IMPACT", t: "Mencatat pelajaran", d: "Mengubah pengalaman menjadi ide perbaikan perjalanan berikutnya.", m: "BIGMIND dan CI-MIND" },
+];
+// ---- geometry (px, 1920x1080) ----
+const L = 86, XR = 1792, CW = (XR - L) / 5, R = 46, XV = XR + R;
+const CX = [0,1,2,3,4].map(i => L + CW * i + CW / 2);
+const Y1 = 420, Y2 = 818, XS = 50, XE = 62;
+const WP = [...CX.map(x => [x, Y1]), ...[4,3,2,1,0].map(i => [CX[i], Y2])];
+const d = `M ${XS} ${Y1} H ${XR} A ${R} ${R} 0 0 1 ${XV} ${Y1 + R} V ${Y2 - R} A ${R} ${R} 0 0 1 ${XR} ${Y2} H ${XE}`;
+const ghost = document.getElementById('ghost'), flown = document.getElementById('flown');
+ghost.setAttribute('d', d); flown.setAttribute('d', d);
+const TOTAL = flown.getTotalLength();
+flown.style.strokeDasharray = `${TOTAL} ${TOTAL}`;
+document.getElementById('start').setAttribute('cx', XS); document.getElementById('start').setAttribute('cy', Y1);
+document.getElementById('pin').setAttribute('transform', `translate(${XE} ${Y2 + 3})`);
+// arc length at each waypoint (path is axis-aligned except the two quarter arcs)
+const corner = Math.PI / 2 * R, vert = (Y2 - R) - (Y1 + R);
+const atRow1 = x => x - XS, atRow2 = x => (XR - XS) + 2 * corner + vert + (XR - x);
+const LEN = [...CX.map(atRow1), ...[4,3,2,1,0].map(i => atRow2(CX[i]))];
+const END = atRow2(XE);
+
+// ---- build step DOM ----
+const layer = document.getElementById('layer');
+const el = (html, cls, x, y) => { const e = document.createElement('div'); e.className = 'abs ' + cls; e.innerHTML = html; e.style.left = x + 'px'; e.style.top = y + 'px'; layer.appendChild(e); return e; };
+const PH = [
+  { text: 'SEBELUM BERANGKAT', x: L, y: 214, from: 0 },
+  { text: 'DI BANDARA DAN SELAMA PERJALANAN', x: L + CW * 2 + 10, y: 614, from: 5 },
+  { text: 'SETELAH TIBA', x: L, y: 614, from: 8 },
+];
+const arrow = '<svg viewBox="0 0 24 24"><path d="M4 12h14m-6-6 6 6-6 6" fill="none" stroke="#FFC629" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+PH.forEach(p => p.node = el(arrow + p.text, 'phase', p.x, p.y));
+const nodes = STEPS.map((s, i) => {
+  const [x, y] = WP[i];
+  return {
+    ghost: el(String(s.vs), 'gate ghost', x - 29, y - 21),
+    halo: el('', 'halo', x - 60, y - 60),
+    gate: el(String(s.vs), 'gate', x - 29, y - 21),
+    illus: el(`<img class="illus" src="assets/vs${s.vs}.png">`, '', x - 95, y - 168),
+    text: el(`<div class="en">${s.en}</div><div class="t">${s.t}</div><div class="d">${s.d}</div><div class="m"><b>Di MIND ID</b>${s.m}</div>`, 'step', x - 150, y + 40),
+  };
+});
+// halo sits under the gates and illustrations
+nodes.forEach(n => layer.insertBefore(n.halo, layer.firstChild));
+
+// ---- timeline ----
+const SPEED = 520;            // px per second along the route
+const INTRO = 1.2, DWELL = 1.75, LAND = 1.0, OUTRO = 3.5;
+const ease = u => u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const legs = []; let t = INTRO, prev = 0;
+[...LEN, END].forEach((len, i) => {
+  const dur = Math.max(.7, (len - prev) / SPEED);
+  legs.push({ from: prev, to: len, t0: t, t1: t + dur, arrive: t + dur }); t += dur + (i < LEN.length ? DWELL : 0); prev = len;
+});
+const DURATION = t + LAND + OUTRO;
+window.DURATION = DURATION;
+
+const plane = document.getElementById('plane');
+function render(T) {
+  // where is the plane along the route?
+  let s = 0;
+  for (const g of legs) { if (T >= g.t0) s = g.from + (g.to - g.from) * ease(clamp((T - g.t0) / (g.t1 - g.t0))); }
+  flown.style.strokeDashoffset = TOTAL - s;
+  const p = flown.getPointAtLength(s), q = flown.getPointAtLength(Math.min(TOTAL, s + 2)), o = flown.getPointAtLength(Math.max(0, s - 2));
+  const ang = Math.atan2(q.y - o.y, q.x - o.x) * 180 / Math.PI;
+  const landT = clamp((T - legs[legs.length - 1].arrive) / LAND);
+  plane.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${ang}) scale(${1 - .35 * landT})`);
+  plane.style.opacity = 1 - landT;
+  document.getElementById('pin').style.opacity = landT;
+  document.getElementById('key').style.opacity = clamp((T - legs[legs.length - 1].arrive - .5) / .6);
+  // steps
+  nodes.forEach((n, i) => {
+    const a = legs[i].arrive, u = T - a;
+    const pop = clamp(u / .28), rise = clamp((u - .12) / .45), txt = clamp((u - .3) / .45);
+    n.gate.style.opacity = pop; n.gate.style.transform = `scale(${.6 + .4 * ease(pop)})`;
+    n.ghost.style.opacity = 1 - pop;
+    n.illus.style.opacity = rise; n.illus.style.transform = `translateY(${14 * (1 - ease(rise))}px)`;
+    n.text.style.opacity = txt; n.text.style.transform = `translateY(${10 * (1 - ease(txt))}px)`;
+    const next = i + 1 < legs.length ? legs[i + 1].t0 : a + 99;     // halo while the plane is parked here
+    const hv = u >= 0 && T < next ? Math.sin(clamp(u / .5) * Math.PI / 2) * (.28 + .1 * Math.sin(u * 5)) : 0;
+    n.halo.style.opacity = hv;
+  });
+  PH.forEach(ph => { const u = T - legs[ph.from].arrive + .4; ph.node.style.opacity = clamp(u / .4); });
+}
+window.render = render;
+render(0);
+</script>
+</body>
+</html>
