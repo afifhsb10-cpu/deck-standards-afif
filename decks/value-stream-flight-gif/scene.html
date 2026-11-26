@@ -13,7 +13,7 @@
     --signal: #FFC629; --signal-deep: #E0A800; --hair: #E6E8EB;
   }
   * { box-sizing: border-box; margin: 0; }
-  html, body { width: 1920px; height: 1080px; background: var(--ground); overflow: hidden; }
+  html, body { width: 1920px; height: 940px; background: var(--ground); overflow: hidden; }
   body { font-family: Barlow, sans-serif; color: var(--ink); position: relative; }
   .abs { position: absolute; }
   .masthead { left: 86px; top: 46px; font-size: 17px; font-weight: 600; letter-spacing: .22em; color: var(--muted); }
@@ -27,7 +27,8 @@
   .step .en { font-size: 14px; font-weight: 700; letter-spacing: .14em; color: var(--muted); }
   .step .t { margin-top: 4px; font-size: 23px; font-weight: 600; line-height: 1.15; }
   .step .d { margin-top: 6px; font-size: 17px; line-height: 1.32; color: var(--muted); }
-  .step .m { margin-top: 7px; font-size: 17px; line-height: 1.3; font-weight: 600; }
+  .step .m { margin-top: 8px; font-size: 16.5px; line-height: 1.3; font-weight: 600; }
+  .step i { font-style: italic; }
   .step .m b { font-weight: 700; background: var(--signal); padding: 0 5px; border-radius: 3px; margin-right: 4px; }
   .gate { width: 58px; height: 42px; border-radius: 7px; background: var(--signal); color: var(--ink);
           font-size: 25px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 3px var(--ground); }
@@ -37,13 +38,10 @@
   .key .tag { background: var(--ink); color: var(--signal); font-size: 15px; font-weight: 700; letter-spacing: .18em; padding: 7px 12px; border-radius: 5px; }
   .key .msg { font-size: 25px; font-weight: 600; }
   .src { right: 86px; top: 1046px; font-size: 14px; color: var(--muted); }
-  svg.route { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+  svg.route { position: absolute; left: 0; top: 0; width: 1920px; height: 940px; overflow: visible; }
 </style>
 </head>
 <body>
-  <div class="abs masthead">VALUE STREAM MIND ID &nbsp;·&nbsp; ANALOGI PERJALANAN UDARA</div>
-  <h1 class="abs">Menjalankan MIND ID seperti satu perjalanan udara</h1>
-  <div class="abs sub">Dari sudut pandang kita sebagai penumpang, sepuluh value stream adalah langkah yang kita jalani dari merencanakan perjalanan hingga tiba dan mengevaluasinya. Nomor menunjukkan value stream.</div>
 
   <svg class="route" id="svg">
     <path id="ghost" fill="none" stroke="var(--ghost)" stroke-width="3" stroke-dasharray="10 9" stroke-linecap="round"/>
@@ -62,27 +60,24 @@
     </g></g>
   </svg>
   <div id="layer"></div>
-  <div class="abs key" id="key" style="opacity:0"><span class="tag">PESAN KUNCI</span>
-    <span class="msg">Perjalanan berhasil bila setiap langkah dijalankan dengan baik dan saling terhubung. Begitu pula MIND ID.</span></div>
-  <div class="abs src">Sumber: SoD Topic Mapping #1 sampai #10</div>
 
 <script>
 const STEPS = [
-  { vs: 1, en: "STRATEGY TO PLAN", t: "Merancang itinerary", d: "Menentukan tujuan, rute, jadwal, dan maskapai yang akan dipakai.", m: "RJPP dan RKAP" },
-  { vs: 2, en: "INVEST TO VALUE", t: "Memilih tiket sepadan", d: "Menimbang harga, kelas, dan manfaat sebelum membeli tiket.", m: "Gate review dan akuisisi" },
-  { vs: 3, en: "PERMIT TO OPERATE", t: "Mengurus paspor dan visa", d: "Memastikan dokumen perjalanan lengkap dan sah sebelum berangkat.", m: "Izin, lingkungan, kebijakan" },
-  { vs: 6, en: "HIRE TO RETIRE", t: "Menyiapkan rombongan", d: "Menentukan siapa yang ikut, membagi peran, dan menyewa pemandu.", m: "Talenta organik dan TAD" },
-  { vs: 4, en: "ASSET TO PRODUCTIVITY", t: "Mengecek koper dan bawaan", d: "Mendata barang bawaan dan memastikan semuanya siap dipakai.", m: "Aset MIND ID dan AH" },
-  { vs: 9, en: "DETECT TO PROTECT", t: "Melewati cek keamanan", d: "Memastikan bawaan aman dan memahami prosedur darurat.", m: "WBS, illegal mining, BCMS" },
-  { vs: 10, en: "DATA TO DECISION", t: "Memantau info penerbangan", d: "Membaca aplikasi, papan jadwal, dan cuaca sebelum mengambil keputusan.", m: "Analitik data dan TI/OT" },
-  { vs: 8, en: "NARRATIVE TO TRUST", t: "Mengabari keluarga", d: "Memberi kabar jadwal dan posisi agar keluarga dan penjemput tenang.", m: "Komunikasi korporat" },
-  { vs: 5, en: "TARGET TO PERFORMANCE", t: "Menilai hasil perjalanan", d: "Mengecek ketepatan waktu, biaya, dan agenda yang tercapai.", m: "KPI kolegial dan kinerja AH" },
-  { vs: 7, en: "IDEA TO IMPACT", t: "Mencatat pelajaran", d: "Mengubah pengalaman menjadi ide perbaikan perjalanan berikutnya.", m: "BIGMIND dan CI-MIND" },
+  { vs: 1, en: "STRATEGY TO PLAN", t: "Merancang itinerary", d: "Menentukan tujuan, rute, jadwal, dan maskapai yang akan dipakai.", m: "RJPP dan RKAP untuk menentukan arah strategis dan target perusahaan" },
+  { vs: 2, en: "INVEST TO VALUE", t: "Memilih tiket <i>best value</i>", d: "Menimbang harga, kelas, dan manfaat sebelum membeli tiket.", m: "Proses gate review untuk melihat ketepatan nilai sebelum berinvestasi" },
+  { vs: 3, en: "PERMIT TO OPERATE", t: "Mengurus paspor dan visa", d: "Memastikan dokumen perjalanan lengkap dan sah sebelum berangkat.", m: "Mengelola izin dan kebijakan untuk kelancaran operasi perusahaan" },
+  { vs: 6, en: "HIRE TO RETIRE", t: "Menyiapkan rombongan", d: "Menentukan siapa yang ikut, membagi peran, dan menyewa pemandu.", m: "Menentukan <i>talent</i> dan desain organisasi yang tepat untuk menjalankan perusahaan" },
+  { vs: 4, en: "ASSET TO PRODUCTIVITY", t: "Mengecek koper dan bawaan", d: "Mendata barang bawaan dan memastikan semuanya siap dipakai.", m: "Mengelola seluruh asset perusahaan untuk menjaga produktivitas perusahaan" },
+  { vs: 9, en: "DETECT TO PROTECT", t: "Melewati cek keamanan", d: "Memastikan bawaan aman dan memahami prosedur darurat.", m: "Pengelolaan WBS, risk, illegal mining dan framework BCMS untuk memastikan <i>continuity</i> bisnis perusahaan" },
+  { vs: 10, en: "DATA TO DECISION", t: "Memantau info penerbangan", d: "Membaca aplikasi, papan jadwal, dan cuaca sebelum mengambil keputusan kelanjutan perjalanan.", m: "Pengelolaan analitik data dan IT/OT untuk ketepatan pengambilan keputusan perusahaan" },
+  { vs: 8, en: "NARRATIVE TO TRUST", t: "Mengabari keluarga", d: "Memberi kabar jadwal dan posisi agar keluarga dan penjemput tenang.", m: "Mengelola informasi melalui komunikasi korporasi untuk menjaga reputasi bisnis perusahaan" },
+  { vs: 5, en: "TARGET TO PERFORMANCE", t: "Menilai hasil perjalanan", d: "Mengecek ketepatan waktu, biaya, dan itinerary yang tercapai.", m: "Pengelolaan KPI korporasi dan kinerja AH untuk melihat ketercapaian target perusahaan" },
+  { vs: 7, en: "IDEA TO IMPACT", t: "Mencatat pelajaran", d: "Mengubah pengalaman menjadi ide perbaikan perjalanan berikutnya.", m: "Menyediakan BIGMIND dan CI&#8209;MIND sebagai wadah untuk <i>improvement</i> bisnis dan operasi perusahaan" },
 ];
 // ---- geometry (px, 1920x1080) ----
 const L = 86, XR = 1792, CW = (XR - L) / 5, R = 46, XV = XR + R;
 const CX = [0,1,2,3,4].map(i => L + CW * i + CW / 2);
-const Y1 = 420, Y2 = 818, XS = 50, XE = 62;
+const Y1 = 200, Y2 = 668, XS = 50, XE = 62;
 const WP = [...CX.map(x => [x, Y1]), ...[4,3,2,1,0].map(i => [CX[i], Y2])];
 const d = `M ${XS} ${Y1} H ${XR} A ${R} ${R} 0 0 1 ${XV} ${Y1 + R} V ${Y2 - R} A ${R} ${R} 0 0 1 ${XR} ${Y2} H ${XE}`;
 const ghost = document.getElementById('ghost'), flown = document.getElementById('flown');
@@ -100,13 +95,7 @@ const END = atRow2(XE);
 // ---- build step DOM ----
 const layer = document.getElementById('layer');
 const el = (html, cls, x, y) => { const e = document.createElement('div'); e.className = 'abs ' + cls; e.innerHTML = html; e.style.left = x + 'px'; e.style.top = y + 'px'; layer.appendChild(e); return e; };
-const PH = [
-  { text: 'SEBELUM BERANGKAT', x: L, y: 214, from: 0 },
-  { text: 'DI BANDARA DAN SELAMA PERJALANAN', x: L + CW * 2 + 10, y: 614, from: 5 },
-  { text: 'SETELAH TIBA', x: L, y: 614, from: 8 },
-];
-const arrow = '<svg viewBox="0 0 24 24"><path d="M4 12h14m-6-6 6 6-6 6" fill="none" stroke="#FFC629" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-PH.forEach(p => p.node = el(arrow + p.text, 'phase', p.x, p.y));
+const PH = [];
 const nodes = STEPS.map((s, i) => {
   const [x, y] = WP[i];
   return {
@@ -122,7 +111,7 @@ nodes.forEach(n => layer.insertBefore(n.halo, layer.firstChild));
 
 // ---- timeline ----
 const SPEED = 520;            // px per second along the route
-const INTRO = 1.2, DWELL = 1.75, LAND = 1.0, OUTRO = 3.5;
+const INTRO = 1.0, DWELL = 2.0, LAND = 1.0, OUTRO = 3.0;
 const ease = u => u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const legs = []; let t = INTRO, prev = 0;
@@ -131,7 +120,7 @@ const legs = []; let t = INTRO, prev = 0;
   legs.push({ from: prev, to: len, t0: t, t1: t + dur, arrive: t + dur }); t += dur + (i < LEN.length ? DWELL : 0); prev = len;
 });
 const DURATION = t + LAND + OUTRO;
-window.DURATION = DURATION;
+window.DURATION = DURATION; window.SCENE_H = 940;
 
 const plane = document.getElementById('plane');
 function render(T) {
@@ -145,7 +134,6 @@ function render(T) {
   plane.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${ang}) scale(${1 - .35 * landT})`);
   plane.style.opacity = 1 - landT;
   document.getElementById('pin').style.opacity = landT;
-  document.getElementById('key').style.opacity = clamp((T - legs[legs.length - 1].arrive - .5) / .6);
   // steps
   nodes.forEach((n, i) => {
     const a = legs[i].arrive, u = T - a;

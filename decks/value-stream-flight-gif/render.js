@@ -19,6 +19,8 @@ const ONLY = opt("--only", null);
   await page.evaluate(() => document.fonts.ready);
   await page.waitForFunction(() => [...document.images].every((i) => i.complete));
   const duration = await page.evaluate(() => window.DURATION);
+  const sceneH = await page.evaluate(() => window.SCENE_H || 1080);
+  await page.setViewportSize({ width: 1920, height: sceneH });
   const times = ONLY ? ONLY.split(",").map(Number) : [...Array(Math.ceil(duration * FPS)).keys()].map((f) => f / FPS);
   for (let i = 0; i < times.length; i++) {
     await page.evaluate((t) => window.render(t), times[i]);
