@@ -41,4 +41,15 @@ Cek cepat beberapa frame: `node render.js /tmp/t --only 3.2,14.5,40`.
 Revisi konten (dari screenshot pengguna): kalimat "Di MIND ID" lengkap untuk 10 langkah; VS2 "Memilih tiket *best value*"; VS5 "…biaya, dan itinerary yang tercapai"; VS10 "…sebelum mengambil keputusan kelanjutan perjalanan"; italic untuk *best value*, *talent*, *continuity*, *improvement*. Typo "strategisdan" di sumber ditulis "strategis dan".
 - `poster.png` — frame akhir (untuk cetak / thumbnail).
 
+### Versi transparan (tanpa latar putih)
+- `value-stream-flight-transparent.gif` — 1920×940, latar transparan (±17 MB). Untuk slide berlatar **putih / terang**: GIF hanya punya transparansi penuh-atau-tidak, jadi tepi huruf dan ilustrasi dihaluskan terhadap putih (`--matte`). Di latar gelap akan tampak tepi pucat, dan teks arang tidak terbaca.
+- `poster-transparent.png` — frame akhir dengan alfa penuh (PNG).
+- `ilustrasi-transparan.zip` — 10 ilustrasi FLUX sebagai PNG transparan.
+
+Bedanya dengan versi putih: halo kuning yang berdenyut dihilangkan (semi-transparan tidak bisa di GIF); rute di bawah plakat dilubangi dengan SVG mask, bukan ditutup warna putih.
+```bash
+NODE_PATH=../../node_modules:$(npm root -g) node render.js /tmp/vsf-t --transparent [--matte F2F2F2]
+```
+Ukurannya lebih besar daripada versi putih karena tiap frame harus disimpan utuh (disposal "restore to background") agar pesawat tidak meninggalkan jejak; frame identik digabung (421 → 225 frame).
+
 Font Barlow (SIL OFL, `fonts/OFL.txt`) hanya dipakai saat render; file GIF/MP4 tidak butuh font terpasang.

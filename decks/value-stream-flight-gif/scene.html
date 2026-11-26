@@ -44,8 +44,9 @@
 <body>
 
   <svg class="route" id="svg">
-    <path id="ghost" fill="none" stroke="var(--ghost)" stroke-width="3" stroke-dasharray="10 9" stroke-linecap="round"/>
-    <path id="flown" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <defs><mask id="holes" maskUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><rect width="1920" height="1080" fill="#fff"/><g id="holeSet" fill="#000"></g></mask></defs>
+    <path id="ghost" mask="url(#holes)" fill="none" stroke="var(--ghost)" stroke-width="3" stroke-dasharray="10 9" stroke-linecap="round"/>
+    <path id="flown" mask="url(#holes)" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
   <svg class="route" id="planeSvg">
     <circle id="start" r="9" fill="var(--ground)" stroke="var(--ink)" stroke-width="4"/>
@@ -85,6 +86,11 @@ ghost.setAttribute('d', d); flown.setAttribute('d', d);
 const TOTAL = flown.getTotalLength();
 flown.style.strokeDasharray = `${TOTAL} ${TOTAL}`;
 document.getElementById('start').setAttribute('cx', XS); document.getElementById('start').setAttribute('cy', Y1);
+const holeSet = document.getElementById('holeSet'), NS = 'http://www.w3.org/2000/svg';
+const hole = (x, y, w, h, r) => { const e = document.createElementNS(NS, 'rect'); Object.entries({ x: x - w / 2, y: y - h / 2, width: w, height: h, rx: r }).forEach(([k, v]) => e.setAttribute(k, v)); holeSet.appendChild(e); };
+// transparent mode (?transparent=1): no page background, no semi-transparent halo
+const TRANSPARENT = new URLSearchParams(location.search).has('transparent');
+if (TRANSPARENT) { document.documentElement.style.setProperty('--ground', 'transparent'); document.documentElement.style.background = 'transparent'; document.body.style.background = 'transparent'; }
 document.getElementById('pin').setAttribute('transform', `translate(${XE} ${Y2 + 3})`);
 // arc length at each waypoint (path is axis-aligned except the two quarter arcs)
 const corner = Math.PI / 2 * R, vert = (Y2 - R) - (Y1 + R);
@@ -106,6 +112,7 @@ const nodes = STEPS.map((s, i) => {
     text: el(`<div class="en">${s.en}</div><div class="t">${s.t}</div><div class="d">${s.d}</div><div class="m"><b>Di MIND ID</b>${s.m}</div>`, 'step', x - 150, y + 40),
   };
 });
+WP.forEach(([x, y]) => hole(x, y, 64, 48, 9)); hole(XS, Y1, 22, 22, 11);
 // halo sits under the gates and illustrations
 nodes.forEach(n => layer.insertBefore(n.halo, layer.firstChild));
 
@@ -144,7 +151,7 @@ function render(T) {
     n.text.style.opacity = txt; n.text.style.transform = `translateY(${10 * (1 - ease(txt))}px)`;
     const next = i + 1 < legs.length ? legs[i + 1].t0 : a + 99;     // halo while the plane is parked here
     const hv = u >= 0 && T < next ? Math.sin(clamp(u / .5) * Math.PI / 2) * (.28 + .1 * Math.sin(u * 5)) : 0;
-    n.halo.style.opacity = hv;
+    n.halo.style.opacity = TRANSPARENT ? 0 : hv;
   });
   PH.forEach(ph => { const u = T - legs[ph.from].arrive + .4; ph.node.style.opacity = clamp(u / .4); });
 }
