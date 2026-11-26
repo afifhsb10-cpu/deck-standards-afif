@@ -2,7 +2,7 @@
 
 Usage: python check_pptx.py deck.pptx
 Exit code 1 on any error.
-  - negative <a:ext>/<a:off> (e.g. a line drawn right-to-left) -> PowerPoint "repair" prompt
+  - negative <a:ext> sizes (e.g. a line drawn right-to-left) -> PowerPoint "repair" prompt
   - leftover placeholder text ([ISI ...], lorem, TODO, xxx)   -> warning, list them
   - slides without speaker notes                              -> warning
 """
@@ -15,8 +15,10 @@ def main(path):
     for n in z.namelist():
         if not n.endswith(".xml"): continue
         x = z.read(n).decode("utf8", "ignore")
-        for m in re.finditer(r'<a:(ext|off) [^>]*?(cx|cy|x|y)="-\d+"', x):
-            print(f"ERROR {n}: negative {m.group(1)} ({m.group(0)[:60]}...) -> normalise and use flipH/flipV")
+        # Negative sizes (<a:ext cx/cy>) make PowerPoint offer a repair. Negative offsets (<a:off>)
+        # are legal: shapes may sit partly off the slide.
+        for m in re.finditer(r'<a:ext [^>]*?(cx|cy)="-\d+"', x):
+            print(f"ERROR {n}: negative ext ({m.group(0)[:60]}...) -> normalise and use flipH/flipV")
             errors += 1
     notes = {n for n in z.namelist() if n.startswith("ppt/notesSlides/")}
     for n in slides:

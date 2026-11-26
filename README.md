@@ -18,10 +18,13 @@ package.json                           # dependency build (npm install di root)
     ├── halftone.py                    # foto → figur halftone transparan
     ├── photo_grade.py                 # foto → crop, tint, fade ke warna latar
     ├── check_pptx.py                  # cek hal yang bikin PowerPoint minta "Repair"
+    ├── add_animation.py               # sisipkan animasi klik (wipe, fade, motion path, spin)
+    ├── storyboard.py                  # QA animasi: render per klik + preview.gif
     └── setup_qa_fonts.sh              # alias Arial Black → Archivo Black untuk QA jujur
 decks/                                 # contoh kerja: .pptx + build.js + aset + studi kasus
 ├── modus-senyap/                      # dunia sinematik malam, foto ber-fade, satu cahaya amber
-└── bls-5-menit-pertama/               # dunia manual lapangan, figur halftone, data digambar
+├── bls-5-menit-pertama/               # dunia manual lapangan, figur halftone, data digambar
+└── value-stream-mind-id/              # brand MIND ID, rencana penerbangan, garis pemandu beranimasi
 ```
 
 ## Cara pakai

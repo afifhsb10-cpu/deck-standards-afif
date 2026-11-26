@@ -53,6 +53,9 @@ A genre pack is a starting point, not a template. Each deck earns a **world deri
 **Worked examples** (read the README of the closest one before building):
 - [decks/modus-senyap](../../../decks/modus-senyap/README.md) — cinematic-night: photographic world, graded fades, one sodium light.
 - [decks/bls-5-menit-pertama](../../../decks/bls-5-menit-pertama/README.md) — field manual: halftone figures on the grid, data drawn literally.
+- [decks/value-stream-mind-id](../../../decks/value-stream-mind-id/README.md) — brand-led (MIND ID) flight plan: animated guide line, plane on a motion path, client illustrations reused.
+
+**Client assets & brand:** when the user supplies on-brand illustrations or a brand skill exists (e.g. `mind-id-design`), reuse those assets and palette; generate with FLUX only what is missing.
 
 ## 2. Never (merged Impeccable + design-taste bans)
 
@@ -92,6 +95,18 @@ Full pipeline and prompt rules: [reference/image-pipeline.md](reference/image-pi
 Follow the `pptx` skill's structured-deck flow (theme → layouts → placeholders → `applyTheme`). Each finished deck lives in `decks/<name>/` with `build.js`, `notes.json`, processed `assets/`, `images.jobs.json` (prompts used) and a `README.md` case study (design read, the five decisions, techniques, what was rejected and why). Build with `NODE_PATH=$PWD/node_modules node decks/<name>/build.js <out.pptx>` after `npm install` at the repo root. Speaker notes on every slide (what to say, timing, cautions). Unverified claims (guideline years, statistics) are flagged to the user, never silently invented.
 
 Reusable helpers in the two example `build.js` files: `rule()` with flip normalisation, masthead layouts, ledger and instrument-panel blocks, beat ticks, half-bleed image + overlaid caption, thumbnail summary rows.
+
+## 5b. Motion — click animations that teach the reading order
+
+Animate only when the motion carries meaning (a sequence, a route, a build-up); never decorative entrances on everything. When a user asks for "animation on every shape", give every content shape an entrance that is **tied to the narrative**, not a uniform fade.
+
+Proven pattern — **the guide line** (decks/value-stream-mind-id):
+- A faint dashed "planned" route and ghost waypoints are visible from the start (the map).
+- Each click wipes the next route segment in the direction of travel while a marker (plane, dot, cursor) follows the same motion path; on arrival the waypoint fills, then its image and text fade in (staggered ~120–250 ms).
+- Constant line speed (inches/second) so wipe and motion stay in sync; corners as quarter arcs with a 90° spin of the marker.
+- Put the marker **under** the waypoint discs so arriving never hides the number.
+
+Mechanics: pptxgenjs cannot write animations. Name every animated shape (`objectName`), write a spec, and run `scripts/add_animation.py deck.pptx spec.json` after `applyTheme`. Motion paths are offsets from the shape's **original** position in slide fractions (write each click's path from the origin). QA with `scripts/storyboard.py deck.pptx spec.json OUT --mover <name>` (frame per click + `preview.gif`) because LibreOffice renders only the final state. Tell the user to play it once in PowerPoint for timing.
 
 ## 6. QA — required before delivering
 

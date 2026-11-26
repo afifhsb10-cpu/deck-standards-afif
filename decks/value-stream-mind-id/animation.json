@@ -1,0 +1,564 @@
+{
+ "slides": {
+  "1": [
+   {
+    "effects": [
+     {
+      "target": "rute-1",
+      "type": "wipe",
+      "dir": "left",
+      "delay": 0,
+      "dur": 364
+     },
+     {
+      "target": "pesawat",
+      "type": "path",
+      "path": "M 0 0 L 0.10088 0 E",
+      "delay": 0,
+      "dur": 364
+     },
+     {
+      "target": "fase1-sq",
+      "type": "fade",
+      "delay": 0,
+      "dur": 400
+     },
+     {
+      "target": "fase1-txt",
+      "type": "fade",
+      "delay": 0,
+      "dur": 400
+     },
+     {
+      "target": "fase1-line",
+      "type": "fade",
+      "delay": 0,
+      "dur": 400
+     },
+     {
+      "target": "wp-1",
+      "type": "fade",
+      "delay": 364,
+      "dur": 250
+     },
+     {
+      "target": "no-1",
+      "type": "fade",
+      "delay": 364,
+      "dur": 250
+     },
+     {
+      "target": "ilustrasi-1",
+      "type": "fade",
+      "delay": 484,
+      "dur": 450
+     },
+     {
+      "target": "teks-1",
+      "type": "fade",
+      "delay": 614,
+      "dur": 450
+     }
+    ]
+   },
+   {
+    "effects": [
+     {
+      "target": "rute-2",
+      "type": "wipe",
+      "dir": "left",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "pesawat",
+      "type": "path",
+      "path": "M 0.10088 0 L 0.28313 0 E",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "wp-2",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "no-2",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "ilustrasi-2",
+      "type": "fade",
+      "delay": 777,
+      "dur": 450
+     },
+     {
+      "target": "teks-2",
+      "type": "fade",
+      "delay": 907,
+      "dur": 450
+     }
+    ]
+   },
+   {
+    "effects": [
+     {
+      "target": "rute-3",
+      "type": "wipe",
+      "dir": "left",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "pesawat",
+      "type": "path",
+      "path": "M 0.28313 0 L 0.46539 0 E",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "wp-3",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "no-3",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "ilustrasi-3",
+      "type": "fade",
+      "delay": 777,
+      "dur": 450
+     },
+     {
+      "target": "teks-3",
+      "type": "fade",
+      "delay": 907,
+      "dur": 450
+     }
+    ]
+   },
+   {
+    "effects": [
+     {
+      "target": "rute-4",
+      "type": "wipe",
+      "dir": "left",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "pesawat",
+      "type": "path",
+      "path": "M 0.46539 0 L 0.64764 0 E",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "wp-4",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "no-4",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "ilustrasi-4",
+      "type": "fade",
+      "delay": 777,
+      "dur": 450
+     },
+     {
+      "target": "teks-4",
+      "type": "fade",
+      "delay": 907,
+      "dur": 450
+     }
+    ]
+   },
+   {
+    "effects": [
+     {
+      "target": "rute-5",
+      "type": "wipe",
+      "dir": "left",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "pesawat",
+      "type": "path",
+      "path": "M 0.64764 0 L 0.8299 0 E",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "wp-5",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "no-5",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "ilustrasi-5",
+      "type": "fade",
+      "delay": 777,
+      "dur": 450
+     },
+     {
+      "target": "teks-5",
+      "type": "fade",
+      "delay": 907,
+      "dur": 450
+     }
+    ]
+   },
+   {
+    "effects": [
+     {
+      "target": "rute-ekor",
+      "type": "wipe",
+      "dir": "left",
+      "delay": 0,
+      "dur": 328
+     },
+     {
+      "target": "rute-ka",
+      "type": "wipe",
+      "dir": "left",
+      "delay": 328,
+      "dur": 127
+     },
+     {
+      "target": "rute-v",
+      "type": "wipe",
+      "dir": "up",
+      "delay": 455,
+      "dur": 562
+     },
+     {
+      "target": "rute-kb",
+      "type": "wipe",
+      "dir": "up",
+      "delay": 1017,
+      "dur": 127
+     },
+     {
+      "target": "rute-6",
+      "type": "wipe",
+      "dir": "right",
+      "delay": 1144,
+      "dur": 328
+     },
+     {
+      "target": "pesawat",
+      "type": "path",
+      "path": "M 0.8299 0 L 0.92102 0 C 0.93345 0 0.94352 0.01791 0.94352 0.04 L 0.94352 0.31733 C 0.94352 0.33943 0.93345 0.35733 0.92102 0.35733 L 0.8299 0.35733 E",
+      "delay": 0,
+      "dur": 1472
+     },
+     {
+      "target": "pesawat",
+      "type": "spin",
+      "by": 90,
+      "delay": 328,
+      "dur": 127
+     },
+     {
+      "target": "pesawat",
+      "type": "spin",
+      "by": 90,
+      "delay": 1017,
+      "dur": 127
+     },
+     {
+      "target": "fase2-sq",
+      "type": "fade",
+      "delay": 0,
+      "dur": 400
+     },
+     {
+      "target": "fase2-txt",
+      "type": "fade",
+      "delay": 0,
+      "dur": 400
+     },
+     {
+      "target": "fase2-line",
+      "type": "fade",
+      "delay": 0,
+      "dur": 400
+     },
+     {
+      "target": "wp-6",
+      "type": "fade",
+      "delay": 1472,
+      "dur": 250
+     },
+     {
+      "target": "no-6",
+      "type": "fade",
+      "delay": 1472,
+      "dur": 250
+     },
+     {
+      "target": "ilustrasi-6",
+      "type": "fade",
+      "delay": 1592,
+      "dur": 450
+     },
+     {
+      "target": "teks-6",
+      "type": "fade",
+      "delay": 1722,
+      "dur": 450
+     }
+    ]
+   },
+   {
+    "effects": [
+     {
+      "target": "rute-7",
+      "type": "wipe",
+      "dir": "right",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "pesawat",
+      "type": "path",
+      "path": "M 0.8299 0.35733 L 0.64764 0.35733 E",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "wp-7",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "no-7",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "ilustrasi-7",
+      "type": "fade",
+      "delay": 777,
+      "dur": 450
+     },
+     {
+      "target": "teks-7",
+      "type": "fade",
+      "delay": 907,
+      "dur": 450
+     }
+    ]
+   },
+   {
+    "effects": [
+     {
+      "target": "rute-8",
+      "type": "wipe",
+      "dir": "right",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "pesawat",
+      "type": "path",
+      "path": "M 0.64764 0.35733 L 0.46539 0.35733 E",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "wp-8",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "no-8",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "ilustrasi-8",
+      "type": "fade",
+      "delay": 777,
+      "dur": 450
+     },
+     {
+      "target": "teks-8",
+      "type": "fade",
+      "delay": 907,
+      "dur": 450
+     }
+    ]
+   },
+   {
+    "effects": [
+     {
+      "target": "rute-9",
+      "type": "wipe",
+      "dir": "right",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "pesawat",
+      "type": "path",
+      "path": "M 0.46539 0.35733 L 0.28313 0.35733 E",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "fase3-sq",
+      "type": "fade",
+      "delay": 0,
+      "dur": 400
+     },
+     {
+      "target": "fase3-txt",
+      "type": "fade",
+      "delay": 0,
+      "dur": 400
+     },
+     {
+      "target": "fase3-line",
+      "type": "fade",
+      "delay": 0,
+      "dur": 400
+     },
+     {
+      "target": "wp-9",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "no-9",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "ilustrasi-9",
+      "type": "fade",
+      "delay": 777,
+      "dur": 450
+     },
+     {
+      "target": "teks-9",
+      "type": "fade",
+      "delay": 907,
+      "dur": 450
+     }
+    ]
+   },
+   {
+    "effects": [
+     {
+      "target": "rute-10",
+      "type": "wipe",
+      "dir": "right",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "pesawat",
+      "type": "path",
+      "path": "M 0.28313 0.35733 L 0.10088 0.35733 E",
+      "delay": 0,
+      "dur": 657
+     },
+     {
+      "target": "wp-10",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "no-10",
+      "type": "fade",
+      "delay": 657,
+      "dur": 250
+     },
+     {
+      "target": "ilustrasi-10",
+      "type": "fade",
+      "delay": 777,
+      "dur": 450
+     },
+     {
+      "target": "teks-10",
+      "type": "fade",
+      "delay": 907,
+      "dur": 450
+     }
+    ]
+   },
+   {
+    "effects": [
+     {
+      "target": "rute-tiba",
+      "type": "wipe",
+      "dir": "right",
+      "delay": 0,
+      "dur": 336
+     },
+     {
+      "target": "pesawat",
+      "type": "path",
+      "path": "M 0.10088 0.35733 L 0.0075 0.35733 E",
+      "delay": 0,
+      "dur": 336
+     },
+     {
+      "target": "pesawat",
+      "type": "fadeOut",
+      "delay": 336,
+      "dur": 300
+     },
+     {
+      "target": "tujuan",
+      "type": "fade",
+      "delay": 336,
+      "dur": 300
+     },
+     {
+      "target": "pesan-label",
+      "type": "fade",
+      "delay": 636,
+      "dur": 500
+     },
+     {
+      "target": "pesan",
+      "type": "fade",
+      "delay": 636,
+      "dur": 500
+     }
+    ]
+   }
+  ]
+ }
+}
