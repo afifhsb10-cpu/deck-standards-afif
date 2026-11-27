@@ -1,6 +1,6 @@
 # Value Stream: Denah Bandara Isometrik (GIF / video)
 
-Peta 10 value stream sebagai **denah bandara isometrik** yang dirakit dari 11 modul FLUX, dengan pesawat yang taxi, lepas landas, berputar, dan mendarat. Teks langkah muncul bergantian di panel kanan. Output: GIF (putih & transparan), MP4, PPTX satu slide. 1920×1080, ±45 detik, berulang.
+Peta 10 value stream sebagai **denah bandara isometrik** yang dirakit dari 11 modul FLUX, dengan pesawat yang taxi, lepas landas, berputar, dan mendarat. Teks langkah muncul bergantian di panel kanan. Output: GIF (putih & transparan), MP4, PPTX satu slide. **1920×900** (pita lebar untuk diletakkan di bawah judul slide), ±45 detik, berulang.
 
 ![Animasi](out/value-stream-airport.gif)
 
@@ -42,8 +42,8 @@ NODE_PATH=../../node_modules node make_pptx.js                                  
 - GIF transparan: `encode_transparent_gif.py` menulis **hanya persegi yang berubah** per frame dan memberi disposal "clear" pada frame sebelumnya hanya bila ada piksel yang harus kembali transparan (69 MB → 14 MB). Kontainer GIF dirakit sendiri; sub-gambar dienkode Pillow **dengan `interlace=False`** (default Pillow interlaced → baris teracak). `--verify` men-decode ulang dan membandingkan tiap frame.
 
 ## File di `out/`
-- `value-stream-airport.gif` — 1920×1080, 12,5 fps, ±2,9 MB.
+- `value-stream-airport.gif` — 1920×900, 12,5 fps, ±2,9 MB.
 - `value-stream-airport.mp4` — 25 fps, ±2,7 MB (bisa di-pause).
 - `value-stream-airport-transparent.gif` — tanpa latar, ±14 MB; tepi dihaluskan terhadap putih → untuk slide terang.
-- `Value_Stream_Airport.pptx` — satu slide, GIF penuh + catatan pembicara.
+- `Value_Stream_Airport.pptx` — satu slide: area judul di atas, GIF transparan 12,5" × 5,86" di bawahnya (`--white` untuk versi putih) + catatan pembicara.
 - `poster.png`, `poster-transparent.png`, `modul-isometrik.zip` (11 modul PNG transparan).

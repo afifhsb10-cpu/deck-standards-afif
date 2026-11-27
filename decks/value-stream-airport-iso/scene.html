@@ -10,7 +10,7 @@
   @font-face { font-family: Barlow; font-weight: 700; src: url(fonts/Barlow-Bold.ttf); }
   :root { --ground: #FFFFFF; --ink: #1C1F24; --muted: #5F6772; --ghost: #B9C0C8; --signal: #FFC629; --hair: #E3E6EA; }
   * { box-sizing: border-box; margin: 0; }
-  html, body { width: 1920px; height: 1080px; background: var(--ground); overflow: hidden; }
+  html, body { width: 1920px; height: 900px; background: var(--ground); overflow: hidden; }
   body { font-family: Barlow, sans-serif; color: var(--ink); position: relative; }
   .abs { position: absolute; }
   .mod { position: absolute; }
@@ -19,20 +19,20 @@
           font-size: 23px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 3px #fff; }
   .gate.ghost { background: #fff; color: var(--ghost); border: 2px dashed var(--ghost); box-shadow: none; }
   /* right panel */
-  .panel { left: 1330px; top: 0; width: 540px; height: 1080px; }
-  .strip { position: absolute; left: 0; top: 150px; display: flex; gap: 8px; }
+  .panel { left: 1330px; top: 0; width: 540px; height: 900px; }
+  .strip { position: absolute; left: 0; top: 90px; display: flex; gap: 8px; }
   .strip div { width: 46px; height: 34px; border-radius: 6px; font-size: 19px; font-weight: 700; display: flex; align-items: center; justify-content: center;
                border: 2px dashed var(--ghost); color: var(--ghost); }
   .strip div.done { border: 0; background: var(--signal); color: var(--ink); }
   .strip div.now { border: 0; background: var(--ink); color: var(--signal); }
-  .card { position: absolute; left: 0; top: 250px; width: 540px; }
+  .card { position: absolute; left: 0; top: 190px; width: 540px; }
   .card .num { width: 92px; height: 66px; border-radius: 10px; background: var(--signal); font-size: 40px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
   .card .en { margin-top: 26px; font-size: 18px; font-weight: 700; letter-spacing: .16em; color: var(--muted); }
   .card .t { margin-top: 8px; font-size: 44px; font-weight: 600; line-height: 1.08; }
   .card .d { margin-top: 16px; font-size: 24px; line-height: 1.38; color: var(--muted); }
   .card .m { margin-top: 22px; font-size: 24px; line-height: 1.38; font-weight: 600; }
   .card .m b { display: inline-block; font-weight: 700; background: var(--signal); padding: 0 8px; border-radius: 4px; margin-right: 6px; }
-  .recap { position: absolute; left: 0; top: 240px; width: 540px; }
+  .recap { position: absolute; left: 0; top: 180px; width: 540px; }
   .recap .row { display: flex; align-items: center; gap: 16px; height: 62px; border-top: 1.5px solid var(--hair); font-size: 22px; font-weight: 600; }
   .recap .row:last-child { border-bottom: 1.5px solid var(--hair); }
   .recap .row span { width: 46px; height: 34px; border-radius: 6px; background: var(--signal); font-size: 19px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex: none; }
@@ -80,7 +80,7 @@ const STEPS = [
 ];
 // ---- isometric layout (screen px) ----
 const DX = 200, DY = 115.5, MW = 255;               // cell half-width / half-height, module width
-const OX = 560, OY = 345;
+const OX = 560, OY = 285;
 const C = (i, j) => [OX + (i - j) * DX, OY + (i + j) * DY];
 // travel order snakes through a 4x3 grid; the runway sits right in front of the gate lounge (8)
 const CELLS = { m1: [0, 0], m2: [1, 0], m3: [2, 0], m6: [3, 0], m4: [3, 1], m9: [2, 1], m10: [1, 1], m8: [0, 1], m5: [1, 2], m7: [2, 2] };
@@ -110,8 +110,8 @@ const pt = p => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`;
 const g1 = [P0, ...WP.slice(0, 8), RF, RB];
 // flight: climb out up-right over the map, circle through the empty sky at the top, come back down-left onto RB
 const fl = `M ${pt(RB)} C ${pt(add2(RB, uj, -90))} ${pt([RB[0] + 210, RB[1] - 130])} ${pt([RB[0] + 260, RB[1] - 240])} ` +
-           `C ${pt([RB[0] + 320, RB[1] - 330])} ${pt([RB[0] + 220, RB[1] - 410])} ${pt([RB[0] + 70, RB[1] - 400])} ` +
-           `C ${pt([RB[0] - 70, RB[1] - 390])} ${pt([RB[0] - 120, RB[1] - 320])} ${pt([RB[0] - 60, RB[1] - 260])} ` +
+           `C ${pt([RB[0] + 320, RB[1] - 290])} ${pt([RB[0] + 220, RB[1] - 360])} ${pt([RB[0] + 70, RB[1] - 350])} ` +
+           `C ${pt([RB[0] - 70, RB[1] - 340])} ${pt([RB[0] - 120, RB[1] - 290])} ${pt([RB[0] - 60, RB[1] - 240])} ` +
            `C ${pt([RB[0] + 10, RB[1] - 190])} ${pt(add2(RB, uj, -230))} ${pt(add2(RB, uj, -120))} ` +
            `C ${pt(add2(RB, uj, -70))} ${pt(add2(RB, uj, -25))} ${pt(RB)}`;
 // ground 2: landing roll -> runway front vertex -> 5 -> 7
@@ -162,7 +162,7 @@ add({ kind: 'g2', a: 0, b: lenAt(G2, RM), dur: 1.0, easeF: u => 1 - (1 - u) * (1
 prev = lenAt(G2, RM);
 for (let k = 8; k < 10; k++) { add({ kind: 'g2', a: prev, b: S[k], dur: Math.max(.9, (S[k] - prev) / SPEED), easeF: ease }); arrive.push(t); t += DWELL; prev = S[k]; }
 const T_RECAP = t; const DURATION = t + OUTRO;
-window.DURATION = DURATION; window.SCENE_H = 1080;
+window.DURATION = DURATION; window.SCENE_H = 900;
 
 const plane = $('plane'), shadow = $('shadow');
 const heading = (path, s, L) => { const q = path.getPointAtLength(Math.min(L, s + 2)), o = path.getPointAtLength(Math.max(0, s - 2)); return Math.atan2(q.y - o.y, q.x - o.x) * 180 / Math.PI; };
