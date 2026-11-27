@@ -54,6 +54,8 @@ A genre pack is a starting point, not a template. Each deck earns a **world deri
 - [decks/modus-senyap](../../../decks/modus-senyap/README.md) — cinematic-night: photographic world, graded fades, one sodium light.
 - [decks/bls-5-menit-pertama](../../../decks/bls-5-menit-pertama/README.md) — field manual: halftone figures on the grid, data drawn literally.
 - [decks/value-stream-mind-id](../../../decks/value-stream-mind-id/README.md) — brand-led (MIND ID) flight plan: animated guide line, plane on a motion path, client illustrations reused.
+- [decks/value-stream-flight-gif](../../../decks/value-stream-flight-gif/README.md) — airport wayfinding, flat FLUX icons, rendered to GIF/MP4.
+- [decks/value-stream-airport-iso](../../../decks/value-stream-airport-iso/README.md) — isometric airport floor plan assembled from FLUX modules, take-off/landing, side panel, GIF/MP4.
 
 **Client assets & brand:** when the user supplies on-brand illustrations or a brand skill exists (e.g. `mind-id-design`), reuse those assets and palette; generate with FLUX only what is missing.
 
@@ -107,6 +109,9 @@ Proven pattern — **the guide line** (decks/value-stream-mind-id):
 - Put the marker **under** the waypoint discs so arriving never hides the number.
 
 **When the user wants to paste the animation as one object** (GIF/video instead of PowerPoint animations): build the slide as an HTML scene with a deterministic `render(t)` (SVG path for the route, `getPointAtLength` for the marker and its heading), capture frames with Playwright, encode MP4 + GIF with ffmpeg, and wrap the GIF in a one-slide .pptx. Template: [decks/value-stream-flight-gif](../../../decks/value-stream-flight-gif/README.md) (`scene.html`, `render.js`, `make_pptx.js`). Flat FLUX illustrations rely on white parts — keep a white ground or they break apart when the background is removed.
+- **Isometric "denah" world** (decks/value-stream-airport-iso): generate each zone as a separate isometric cutaway module with one locked style recipe, remove the background, and assemble them on an isometric grid in code (keep white corridors between modules; put stops at module floor centres; draw the route as a transit-map overlay). Text goes in a side panel that changes per stop.
+- **GIF palette:** use 256 colours for detailed illustrations (96 turns light accents grey).
+- **Transparent GIF:** use the deck's `encode_transparent_gif.py` (changed-rectangle deltas + selective disposal 2, `--verify`), not ffmpeg (drops deltas with alpha) or full frames (5× larger). When hand-assembling GIFs from Pillow-encoded sub-images, save them with `interlace=False`.
 
 Mechanics: pptxgenjs cannot write animations. Name every animated shape (`objectName`), write a spec, and run `scripts/add_animation.py deck.pptx spec.json` after `applyTheme`. Motion paths are offsets from the shape's **original** position in slide fractions (write each click's path from the origin). QA with `scripts/storyboard.py deck.pptx spec.json OUT --mover <name>` (frame per click + `preview.gif`) because LibreOffice renders only the final state. Tell the user to play it once in PowerPoint for timing.
 

@@ -1,0 +1,16 @@
+{
+ "style": ", isometric 2D flat vector illustration of one single cutaway room module standing on a square floor platform, true 30-degree isometric projection seen from the front corner, light grey tiled floor, two low back walls in dark charcoal grey, small simple stylized people, clean flat geometric shapes, limited palette of charcoal, light grey, white, warm golden yellow accents and light sky blue, no gradients, no text, no letters, no numbers, signs show only simple pictograms, plain pure white background, isolated module, nothing outside the platform",
+ "jobs": {
+  "m1":  {"size": [1024, 1024], "prompt": "a travel agency desk where an agent helps a traveler, a large wall screen shows a simple route map with two location pins"},
+  "m2":  {"size": [1024, 1024], "prompt": "an airline ticket counter with two self check-in kiosks and a traveler holding a ticket"},
+  "m3":  {"size": [1024, 1024], "prompt": "an immigration passport control booth where an officer checks and stamps a traveler's passport"},
+  "m6":  {"size": [1024, 1024], "prompt": "an airport check-in hall where a small group of travelers with suitcases gather around a tour guide holding a small flag"},
+  "m4":  {"size": [1024, 1024], "prompt": "an airport bag drop counter with a luggage conveyor belt and two luggage trolleys loaded with suitcases"},
+  "m9":  {"size": [1024, 1024], "prompt": "an airport security checkpoint with a walk-through metal detector gate and an x-ray baggage scanner with a conveyor"},
+  "m10": {"size": [1024, 1024], "prompt": "an airport departure hall with a large blank flight information screen on the wall and travelers looking up at it"},
+  "m8":  {"size": [1024, 1024], "prompt": "an airport gate waiting lounge with rows of seats and a large window, one traveler talks on a smartphone"},
+  "m5":  {"size": [1024, 1024], "prompt": "an airport arrival hall with a baggage claim carousel carrying suitcases and travelers collecting their luggage"},
+  "m7":  {"size": [1024, 1024], "prompt": "a quiet airport lounge corner with a small desk, a traveler writing in a notebook next to a laptop and a glowing light bulb lamp"},
+  "rw":  {"size": [1344, 768], "prompt": "an airport apron with a straight runway strip with dashed centerline and one white passenger airplane parked beside a small boarding bridge, open outdoor platform without walls"}
+ }
+}

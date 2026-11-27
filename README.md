@@ -25,7 +25,8 @@ decks/                                 # contoh kerja: .pptx + build.js + aset +
 ├── modus-senyap/                      # dunia sinematik malam, foto ber-fade, satu cahaya amber
 ├── bls-5-menit-pertama/               # dunia manual lapangan, figur halftone, data digambar
 ├── value-stream-mind-id/              # brand MIND ID, rencana penerbangan, garis pemandu beranimasi
-└── value-stream-flight-gif/           # versi GIF/MP4: papan petunjuk bandara, ilustrasi flat FLUX
+├── value-stream-flight-gif/           # versi GIF/MP4: papan petunjuk bandara, ilustrasi flat FLUX
+└── value-stream-airport-iso/          # denah bandara isometrik dari modul FLUX, lepas landas & mendarat, GIF/MP4
 ```
 
 ## Cara pakai

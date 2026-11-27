@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Value Stream Airport</title>
+<style>
+  @font-face { font-family: Barlow; font-weight: 400; src: url(fonts/Barlow-Regular.ttf); }
+  @font-face { font-family: Barlow; font-weight: 500; src: url(fonts/Barlow-Medium.ttf); }
+  @font-face { font-family: Barlow; font-weight: 600; src: url(fonts/Barlow-SemiBold.ttf); }
+  @font-face { font-family: Barlow; font-weight: 700; src: url(fonts/Barlow-Bold.ttf); }
+  :root { --ground: #FFFFFF; --ink: #1C1F24; --muted: #5F6772; --ghost: #B9C0C8; --signal: #FFC629; --hair: #E3E6EA; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1920px; height: 1080px; background: var(--ground); overflow: hidden; }
+  body { font-family: Barlow, sans-serif; color: var(--ink); position: relative; }
+  .abs { position: absolute; }
+  .mod { position: absolute; }
+  svg.layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+  .gate { position: absolute; width: 52px; height: 38px; border-radius: 7px; background: var(--signal); color: var(--ink);
+          font-size: 23px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 3px #fff; }
+  .gate.ghost { background: #fff; color: var(--ghost); border: 2px dashed var(--ghost); box-shadow: none; }
+  /* right panel */
+  .panel { left: 1330px; top: 0; width: 540px; height: 1080px; }
+  .strip { position: absolute; left: 0; top: 150px; display: flex; gap: 8px; }
+  .strip div { width: 46px; height: 34px; border-radius: 6px; font-size: 19px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+               border: 2px dashed var(--ghost); color: var(--ghost); }
+  .strip div.done { border: 0; background: var(--signal); color: var(--ink); }
+  .strip div.now { border: 0; background: var(--ink); color: var(--signal); }
+  .card { position: absolute; left: 0; top: 250px; width: 540px; }
+  .card .num { width: 92px; height: 66px; border-radius: 10px; background: var(--signal); font-size: 40px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .card .en { margin-top: 26px; font-size: 18px; font-weight: 700; letter-spacing: .16em; color: var(--muted); }
+  .card .t { margin-top: 8px; font-size: 44px; font-weight: 600; line-height: 1.08; }
+  .card .d { margin-top: 16px; font-size: 24px; line-height: 1.38; color: var(--muted); }
+  .card .m { margin-top: 22px; font-size: 24px; line-height: 1.38; font-weight: 600; }
+  .card .m b { display: inline-block; font-weight: 700; background: var(--signal); padding: 0 8px; border-radius: 4px; margin-right: 6px; }
+  .recap { position: absolute; left: 0; top: 240px; width: 540px; }
+  .recap .row { display: flex; align-items: center; gap: 16px; height: 62px; border-top: 1.5px solid var(--hair); font-size: 22px; font-weight: 600; }
+  .recap .row:last-child { border-bottom: 1.5px solid var(--hair); }
+  .recap .row span { width: 46px; height: 34px; border-radius: 6px; background: var(--signal); font-size: 19px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex: none; }
+  .recap .row small { margin-left: auto; font-size: 13px; font-weight: 700; letter-spacing: .14em; color: var(--muted); }
+  i { font-style: italic; }
+</style>
+</head>
+<body>
+  <div id="mods"></div>
+  <svg class="layer" id="routeSvg">
+    <path id="ghost" fill="none" stroke="var(--ghost)" stroke-width="3.5" stroke-dasharray="11 9" stroke-linecap="round"/>
+    <path id="flownHalo" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="flown" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="flight" fill="none" stroke="none"/>
+    <path id="trail" fill="none" stroke="var(--signal)" stroke-width="5" stroke-dasharray="2 12" stroke-linecap="round" opacity=".9"/>
+    <circle id="start" r="10" fill="#fff" stroke="var(--ink)" stroke-width="4"/>
+  </svg>
+  <svg class="layer" id="planeSvg">
+    <g id="shadow" opacity=".2"><g transform="scale(3.1) rotate(90) translate(-12 -12)">
+      <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="var(--ink)"/></g></g>
+    <g id="plane"><g transform="scale(3.1) rotate(90) translate(-12 -12)">
+      <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"
+            fill="var(--signal)" stroke="var(--ink)" stroke-width=".9" stroke-linejoin="round"/></g></g>
+  </svg>
+  <div id="gates"></div>
+  <div class="abs panel" id="panel">
+    <div class="strip" id="strip"></div>
+    <div class="card" id="card"></div>
+    <div class="recap" id="recap"></div>
+  </div>
+
+<script>
+if (new URLSearchParams(location.search).has('transparent')) { document.documentElement.style.background = 'transparent'; document.body.style.background = 'transparent'; }
+const STEPS = [
+  { vs: 1, m: "m1", en: "STRATEGY TO PLAN", t: "Merancang itinerary", d: "Menentukan tujuan, rute, jadwal, dan maskapai yang akan dipakai.", mi: "RJPP dan RKAP untuk menentukan arah strategis dan target perusahaan" },
+  { vs: 2, m: "m2", en: "INVEST TO VALUE", t: "Memilih tiket <i>best value</i>", d: "Menimbang harga, kelas, dan manfaat sebelum membeli tiket.", mi: "Proses gate review untuk melihat ketepatan nilai sebelum berinvestasi" },
+  { vs: 3, m: "m3", en: "PERMIT TO OPERATE", t: "Mengurus paspor dan visa", d: "Memastikan dokumen perjalanan lengkap dan sah sebelum berangkat.", mi: "Mengelola izin dan kebijakan untuk kelancaran operasi perusahaan" },
+  { vs: 6, m: "m6", en: "HIRE TO RETIRE", t: "Menyiapkan rombongan", d: "Menentukan siapa yang ikut, membagi peran, dan menyewa pemandu.", mi: "Menentukan <i>talent</i> dan desain organisasi yang tepat untuk menjalankan perusahaan" },
+  { vs: 4, m: "m4", en: "ASSET TO PRODUCTIVITY", t: "Mengecek koper dan bawaan", d: "Mendata barang bawaan dan memastikan semuanya siap dipakai.", mi: "Mengelola seluruh asset perusahaan untuk menjaga produktivitas perusahaan" },
+  { vs: 9, m: "m9", en: "DETECT TO PROTECT", t: "Melewati cek keamanan", d: "Memastikan bawaan aman dan memahami prosedur darurat.", mi: "Pengelolaan WBS, risk, illegal mining dan framework BCMS untuk memastikan <i>continuity</i> bisnis perusahaan" },
+  { vs: 10, m: "m10", en: "DATA TO DECISION", t: "Memantau info penerbangan", d: "Membaca aplikasi, papan jadwal, dan cuaca sebelum mengambil keputusan kelanjutan perjalanan.", mi: "Pengelolaan analitik data dan IT/OT untuk ketepatan pengambilan keputusan perusahaan" },
+  { vs: 8, m: "m8", en: "NARRATIVE TO TRUST", t: "Mengabari keluarga", d: "Memberi kabar jadwal dan posisi agar keluarga dan penjemput tenang.", mi: "Mengelola informasi melalui komunikasi korporasi untuk menjaga reputasi bisnis perusahaan" },
+  { vs: 5, m: "m5", en: "TARGET TO PERFORMANCE", t: "Menilai hasil perjalanan", d: "Mengecek ketepatan waktu, biaya, dan itinerary yang tercapai.", mi: "Pengelolaan KPI korporasi dan kinerja AH untuk melihat ketercapaian target perusahaan" },
+  { vs: 7, m: "m7", en: "IDEA TO IMPACT", t: "Mencatat pelajaran", d: "Mengubah pengalaman menjadi ide perbaikan perjalanan berikutnya.", mi: "Menyediakan BIGMIND dan CI&#8209;MIND sebagai wadah untuk <i>improvement</i> bisnis dan operasi perusahaan" },
+];
+// ---- isometric layout (screen px) ----
+const DX = 200, DY = 115.5, MW = 255;               // cell half-width / half-height, module width
+const OX = 560, OY = 345;
+const C = (i, j) => [OX + (i - j) * DX, OY + (i + j) * DY];
+// travel order snakes through a 4x3 grid; the runway sits right in front of the gate lounge (8)
+const CELLS = { m1: [0, 0], m2: [1, 0], m3: [2, 0], m6: [3, 0], m4: [3, 1], m9: [2, 1], m10: [1, 1], m8: [0, 1], m5: [1, 2], m7: [2, 2] };
+const RW = { cell: [0, 2], w: 265 };
+const SLOPE = DY / DX;
+const BOT = MW / 2 * SLOPE;                           // centre -> front (bottom) vertex of the module floor
+const front = (i, j) => { const [x, y] = C(i, j); return [x, y + BOT]; };
+
+// modules, back to front
+const mods = document.getElementById('mods');
+const place = (src, cx, by, w) => { const im = new Image(); im.src = `assets/${src}.png`; im.className = 'mod'; im.style.width = w + 'px';
+  im.onload = () => { const h = w * im.naturalHeight / im.naturalWidth; im.style.left = (cx - w / 2) + 'px'; im.style.top = (by - h + 14) + 'px'; }; return im; };
+const order = [...Object.entries(CELLS).map(([k, [i, j]]) => ({ k, i, j, w: MW })), { k: 'rw', i: RW.cell[0], j: RW.cell[1], w: RW.w }]
+  .sort((a, b) => (a.i + a.j) - (b.i + b.j) || (a.i - b.i));
+order.forEach(o => { const [x, y] = C(o.i, o.j); mods.appendChild(place(o.k, x, y + o.w / 2 * SLOPE, o.w)); });
+
+// ---- route ----
+const WP = STEPS.map(s => { const [x, y] = C(...CELLS[s.m]); return [x, y + 14]; });   // floor centre of each module
+const n = Math.hypot(DX, DY), ui = [DX / n, DY / n], uj = [-DX / n, DY / n];       // screen directions of +i and +j
+const add2 = (p, v, k) => [p[0] + v[0] * k, p[1] + v[1] * k];
+const RC = C(...RW.cell);
+const RB = add2(RC, uj, -95), RF = add2(RC, uj, 95), RM = add2(RC, uj, 35);          // runway axis along j: RB back-right end, RF front-left end
+const RFV = [RC[0], RC[1] + RW.w / 2 * SLOPE];                                      // runway module front vertex
+const P0 = add2(WP[0], [-DX / n, -DY / n], 150);
+const pt = p => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`;
+// ground 1: start -> 1..8 -> taxi to the runway's front end -> take-off roll towards the back-right end
+const g1 = [P0, ...WP.slice(0, 8), RF, RB];
+// flight: climb out up-right over the map, circle through the empty sky at the top, come back down-left onto RB
+const fl = `M ${pt(RB)} C ${pt(add2(RB, uj, -90))} ${pt([RB[0] + 210, RB[1] - 130])} ${pt([RB[0] + 260, RB[1] - 240])} ` +
+           `C ${pt([RB[0] + 320, RB[1] - 330])} ${pt([RB[0] + 220, RB[1] - 410])} ${pt([RB[0] + 70, RB[1] - 400])} ` +
+           `C ${pt([RB[0] - 70, RB[1] - 390])} ${pt([RB[0] - 120, RB[1] - 320])} ${pt([RB[0] - 60, RB[1] - 260])} ` +
+           `C ${pt([RB[0] + 10, RB[1] - 190])} ${pt(add2(RB, uj, -230))} ${pt(add2(RB, uj, -120))} ` +
+           `C ${pt(add2(RB, uj, -70))} ${pt(add2(RB, uj, -25))} ${pt(RB)}`;
+// ground 2: landing roll -> runway front vertex -> 5 -> 7
+const g2 = [RB, RM, WP[8], WP[9]];
+const poly = ps => 'M ' + ps.map(pt).join(' L ');
+const routeD = poly([P0, ...WP.slice(0, 8)]) + ' ' + poly([RM, WP[8], WP[9]]);
+const $ = id => document.getElementById(id);
+$('ghost').setAttribute('d', routeD);
+const mk = d => { const e = document.createElementNS('http://www.w3.org/2000/svg', 'path'); e.setAttribute('d', d); e.setAttribute('fill', 'none'); $('routeSvg').append(e); return e; };
+const G1 = mk(poly(g1)), G2 = mk(poly(g2));
+$('flight').setAttribute('d', fl); $('trail').setAttribute('d', fl);
+const L1 = G1.getTotalLength(), L2 = G2.getTotalLength(), LF = $('flight').getTotalLength();
+$('flown').setAttribute('d', routeD); $('flownHalo').setAttribute('d', routeD);
+const lenAt = (path, target) => { let best = 0, bd = 1e9; const L = path.getTotalLength();
+  for (let s = 0; s <= L; s += 1) { const p = path.getPointAtLength(s); const d = Math.hypot(p.x - target[0], p.y - target[1]); if (d < bd) { bd = d; best = s; } } return best; };
+const S7 = lenAt(G1, WP[7]), SRM = lenAt(G2, RM);
+const LT = S7 + (L2 - SRM);
+['flown', 'flownHalo'].forEach(id => $(id).style.strokeDasharray = `${LT} ${LT}`);
+$('start').setAttribute('cx', P0[0]); $('start').setAttribute('cy', P0[1]);
+
+const S = WP.map((w, k) => k < 8 ? lenAt(G1, w) : lenAt(G2, w));
+
+// ---- gates on the map ----
+const gates = $('gates');
+const gate = (cls, txt, p) => { const e = document.createElement('div'); e.className = 'gate ' + cls; e.textContent = txt; e.style.left = (p[0] - 26) + 'px'; e.style.top = (p[1] - 19) + 'px'; gates.appendChild(e); return e; };
+const G = STEPS.map((s, k) => ({ ghost: gate('ghost', s.vs, WP[k]), on: gate('', s.vs, WP[k]) }));
+
+// ---- panel ----
+const strip = $('strip'); const chips = STEPS.map(s => { const d = document.createElement('div'); d.textContent = s.vs; strip.appendChild(d); return d; });
+const card = $('card');
+const cards = STEPS.map(s => { const e = document.createElement('div'); e.style.position = 'absolute'; e.style.opacity = 0;
+  e.innerHTML = `<div class="num">${s.vs}</div><div class="en">${s.en}</div><div class="t">${s.t}</div><div class="d">${s.d}</div><div class="m"><b>Di MIND ID</b>${s.mi}</div>`; card.appendChild(e); return e; });
+const recap = $('recap'); recap.innerHTML = STEPS.map(s => `<div class="row"><span>${s.vs}</span>${s.t}<small>${s.en}</small></div>`).join(''); recap.style.opacity = 0;
+
+// ---- timeline ----
+const SPEED = 330, INTRO = 1.0, DWELL = 2.4, OUTRO = 4.0;
+const ease = u => u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const segs = []; let t = INTRO;
+const add = (seg) => { seg.t0 = t; t += seg.dur; seg.t1 = t; segs.push(seg); return seg; };
+const arrive = [];
+let prev = 0;
+for (let k = 0; k < 8; k++) { add({ kind: 'g1', a: prev, b: S[k], dur: Math.max(.8, (S[k] - prev) / SPEED), easeF: ease }); arrive.push(t); t += DWELL; prev = S[k]; }
+add({ kind: 'g1', a: prev, b: lenAt(G1, RF), dur: 1.6, easeF: ease });                         // taxi to runway
+add({ kind: 'g1', a: lenAt(G1, RF), b: L1, dur: 1.0, easeF: u => u * u });                     // take-off roll
+add({ kind: 'fl', a: 0, b: LF, dur: 4.2, easeF: u => u });                                     // flight loop
+add({ kind: 'g2', a: 0, b: lenAt(G2, RM), dur: 1.0, easeF: u => 1 - (1 - u) * (1 - u) });        // landing roll
+prev = lenAt(G2, RM);
+for (let k = 8; k < 10; k++) { add({ kind: 'g2', a: prev, b: S[k], dur: Math.max(.9, (S[k] - prev) / SPEED), easeF: ease }); arrive.push(t); t += DWELL; prev = S[k]; }
+const T_RECAP = t; const DURATION = t + OUTRO;
+window.DURATION = DURATION; window.SCENE_H = 1080;
+
+const plane = $('plane'), shadow = $('shadow');
+const heading = (path, s, L) => { const q = path.getPointAtLength(Math.min(L, s + 2)), o = path.getPointAtLength(Math.max(0, s - 2)); return Math.atan2(q.y - o.y, q.x - o.x) * 180 / Math.PI; };
+function render(T) {
+  // locate plane
+  let kind = 'g1', s = 0;
+  for (const g of segs) if (T >= g.t0) { kind = g.kind; s = g.a + (g.b - g.a) * g.easeF(clamp((T - g.t0) / (g.t1 - g.t0))); }
+  const path = kind === 'g1' ? G1 : kind === 'g2' ? G2 : $('flight'), L = kind === 'g1' ? L1 : kind === 'g2' ? L2 : LF;
+  const p = path.getPointAtLength(s), ang = heading(path, s, L);
+  const fu = kind === 'fl' ? s / LF : 0;
+  const alt = kind === 'fl' ? Math.sin(Math.PI * clamp(fu / .2) / 2) * Math.sin(Math.PI * clamp((1 - fu) / .2) / 2) : 0;
+  plane.setAttribute('transform', `translate(${p.x} ${p.y - 46 * alt}) rotate(${ang}) scale(${1 + .45 * alt})`);
+  shadow.setAttribute('transform', `translate(${p.x + 6 + 30 * alt} ${p.y + 8 + 20 * alt}) rotate(${ang}) scale(${1 - .25 * alt})`);
+  shadow.style.opacity = .2 - .1 * alt;
+  // flown line: ground distance covered
+  const flownLen = kind === 'g1' ? Math.min(s, S7) : kind === 'fl' ? S7 : S7 + Math.max(0, s - SRM);
+  $('flown').style.strokeDashoffset = $('flownHalo').style.strokeDashoffset = LT - flownLen;
+  const fl0 = segs.find(g => g.kind === 'fl');
+  const trailU = clamp((T - fl0.t0) / (fl0.t1 - fl0.t0));
+  $('trail').style.opacity = T < fl0.t0 ? 0 : .9 * (1 - clamp((T - fl0.t1 - 1.5) / 1));
+  $('trail').style.strokeDasharray = dots(LF * trailU);           // contrail grows behind the plane
+  // gates + panel
+  let cur = -1; arrive.forEach((a, k) => { if (T >= a) cur = k; });
+  G.forEach((g, k) => { const u = clamp((T - arrive[k]) / .28); g.on.style.opacity = u; g.on.style.transform = `scale(${.6 + .4 * ease(u)})`; g.ghost.style.opacity = 1 - u; });
+  chips.forEach((c, k) => { c.className = k < cur ? 'done' : k === cur ? 'now' : ''; if (T >= T_RECAP) c.className = 'done'; });
+  const recapU = clamp((T - T_RECAP) / .6);
+  cards.forEach((c, k) => {
+    const inU = clamp((T - arrive[k] - .15) / .45), next = arrive[k + 1] ?? T_RECAP, outU = clamp((T - next + .05) / .25);
+    const o = k === cur ? inU * (1 - recapU) : (k === cur - 1 ? 1 - clamp((T - arrive[cur]) / .2) : 0);
+    c.style.opacity = o; c.style.transform = `translateY(${16 * (1 - ease(inU))}px)`;
+  });
+  recap.style.opacity = recapU; recap.style.transform = `translateY(${16 * (1 - ease(recapU))}px)`;
+}
+function dots(vis) { const n = Math.floor(vis / 14); return n <= 0 ? `0 ${LF + 1}` : Array(n).fill('2 12').join(' ') + ` 0 ${LF}`; }
+window.render = render;
+render(0);
+</script>
+</body>
+</html>
