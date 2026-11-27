@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Route Animation</title>
+<script src="steps.js"></script>
+<style>
+  @font-face { font-family: Barlow; font-weight: 400; src: url(fonts/Barlow-Regular.ttf); }
+  @font-face { font-family: Barlow; font-weight: 500; src: url(fonts/Barlow-Medium.ttf); }
+  @font-face { font-family: Barlow; font-weight: 600; src: url(fonts/Barlow-SemiBold.ttf); }
+  @font-face { font-family: Barlow; font-weight: 700; src: url(fonts/Barlow-Bold.ttf); }
+  :root {
+    --ground: #FFFFFF; --ink: #1C1F24; --muted: #5F6772; --ghost: #C9CED4;
+    --signal: #FFC629; --signal-deep: #E0A800; --hair: #E6E8EB;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1920px; height: 940px; background: var(--ground); overflow: hidden; }
+  body { font-family: Barlow, sans-serif; color: var(--ink); position: relative; }
+  .abs { position: absolute; }
+  .masthead { left: 86px; top: 46px; font-size: 17px; font-weight: 600; letter-spacing: .22em; color: var(--muted); }
+  h1 { left: 86px; top: 74px; font-size: 52px; font-weight: 600; letter-spacing: -.01em; line-height: 1.05; }
+  .sub { left: 86px; top: 142px; width: 1460px; font-size: 22px; line-height: 1.4; color: var(--muted); }
+  .phase { height: 34px; padding: 0 16px 0 12px; border-radius: 6px; background: var(--ink); color: var(--signal);
+           font-size: 16px; font-weight: 700; letter-spacing: .16em; display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+  .phase svg { width: 18px; height: 18px; }
+  .illus { width: 190px; height: 132px; object-fit: contain; }
+  .step { width: 318px; }  /* overridden per column width in script */
+  .step .en { font-size: 14px; font-weight: 700; letter-spacing: .14em; color: var(--muted); }
+  .step .t { margin-top: 4px; font-size: 23px; font-weight: 600; line-height: 1.15; }
+  .step .d { margin-top: 6px; font-size: 17px; line-height: 1.32; color: var(--muted); }
+  .step .m { margin-top: 8px; font-size: 16.5px; line-height: 1.3; font-weight: 600; }
+  .step i { font-style: italic; }
+  .step .m b { font-weight: 700; background: var(--signal); padding: 0 5px; border-radius: 3px; margin-right: 4px; }
+  .gate { width: 58px; height: 42px; border-radius: 7px; background: var(--signal); color: var(--ink);
+          font-size: 25px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 3px var(--ground); }
+  .gate.ghost { background: var(--ground); color: var(--ghost); border: 2px dashed var(--ghost); box-shadow: none; }
+  .halo { width: 120px; height: 120px; border-radius: 50%; background: var(--signal); }
+  .key { left: 86px; top: 1000px; display: flex; align-items: center; gap: 18px; }
+  .key .tag { background: var(--ink); color: var(--signal); font-size: 15px; font-weight: 700; letter-spacing: .18em; padding: 7px 12px; border-radius: 5px; }
+  .key .msg { font-size: 25px; font-weight: 600; }
+  .src { right: 86px; top: 1046px; font-size: 14px; color: var(--muted); }
+  svg.route { position: absolute; left: 0; top: 0; width: 1920px; height: 940px; overflow: visible; }
+</style>
+</head>
+<body>
+
+  <svg class="route" id="svg">
+    <defs><mask id="holes" maskUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><rect width="1920" height="1080" fill="#fff"/><g id="holeSet" fill="#000"></g></mask></defs>
+    <path id="ghost" mask="url(#holes)" fill="none" stroke="var(--ghost)" stroke-width="3" stroke-dasharray="10 9" stroke-linecap="round"/>
+    <path id="flown" mask="url(#holes)" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <svg class="route" id="planeSvg">
+    <circle id="start" r="9" fill="var(--ground)" stroke="var(--ink)" stroke-width="4"/>
+    <g id="pin" opacity="0">
+      <path d="M0 0 C -5 -11 -22 -22 -22 -38 A 22 22 0 1 1 22 -38 C 22 -22 5 -11 0 0 Z" fill="var(--ink)"/>
+      <circle cy="-38" r="9" fill="var(--signal)"/>
+    </g>
+    <!-- airliner pointing right, 24-unit icon scaled -->
+    <g id="plane"><g transform="scale(3.3) rotate(90) translate(-12 -12)">
+      <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"
+            fill="var(--signal)" stroke="var(--ink)" stroke-width=".9" stroke-linejoin="round"/>
+    </g></g>
+  </svg>
+  <div id="layer"></div>
+
+<script>
+const CFG = window.SCENE, STEPS = CFG.steps, N = STEPS.length, H = CFG.canvasH || 940;
+document.documentElement.style.height = document.body.style.height = H + 'px';
+document.querySelectorAll('svg.route').forEach(s => s.style.height = H + 'px');
+// ---- geometry (px, 1920x1080) ----
+// two-row snake: first ceil(N/2) stops left->right, the rest right->left
+const COLS = Math.ceil(N / 2), ROW2 = N - COLS;
+const L = 86, XR = 1792, CW = (XR - L) / COLS, R = 46, XV = XR + R;
+const CX = [...Array(COLS).keys()].map(i => L + CW * i + CW / 2);
+const Y1 = 200, Y2 = Math.round(H * 0.71), XS = 50, XE = 62;
+const ROW2_COLS = [...Array(ROW2).keys()].map(k => COLS - 1 - k);
+const WP = [...CX.map(x => [x, Y1]), ...ROW2_COLS.map(i => [CX[i], Y2])];
+const d = `M ${XS} ${Y1} H ${XR} A ${R} ${R} 0 0 1 ${XV} ${Y1 + R} V ${Y2 - R} A ${R} ${R} 0 0 1 ${XR} ${Y2} H ${XE}`;
+const ghost = document.getElementById('ghost'), flown = document.getElementById('flown');
+ghost.setAttribute('d', d); flown.setAttribute('d', d);
+const TOTAL = flown.getTotalLength();
+flown.style.strokeDasharray = `${TOTAL} ${TOTAL}`;
+document.getElementById('start').setAttribute('cx', XS); document.getElementById('start').setAttribute('cy', Y1);
+const holeSet = document.getElementById('holeSet'), NS = 'http://www.w3.org/2000/svg';
+const hole = (x, y, w, h, r) => { const e = document.createElementNS(NS, 'rect'); Object.entries({ x: x - w / 2, y: y - h / 2, width: w, height: h, rx: r }).forEach(([k, v]) => e.setAttribute(k, v)); holeSet.appendChild(e); };
+// transparent mode (?transparent=1): no page background, no semi-transparent halo
+const TRANSPARENT = new URLSearchParams(location.search).has('transparent');
+if (TRANSPARENT) { document.documentElement.style.setProperty('--ground', 'transparent'); document.documentElement.style.background = 'transparent'; document.body.style.background = 'transparent'; }
+document.getElementById('pin').setAttribute('transform', `translate(${XE} ${Y2 + 3})`);
+// arc length at each waypoint (path is axis-aligned except the two quarter arcs)
+const corner = Math.PI / 2 * R, vert = (Y2 - R) - (Y1 + R);
+const atRow1 = x => x - XS, atRow2 = x => (XR - XS) + 2 * corner + vert + (XR - x);
+const LEN = [...CX.map(atRow1), ...ROW2_COLS.map(i => atRow2(CX[i]))];
+const END = atRow2(XE);
+
+// ---- build step DOM ----
+const layer = document.getElementById('layer');
+const el = (html, cls, x, y) => { const e = document.createElement('div'); e.className = 'abs ' + cls; e.innerHTML = html; e.style.left = x + 'px'; e.style.top = y + 'px'; layer.appendChild(e); return e; };
+const PH = [];
+const nodes = STEPS.map((s, i) => {
+  const [x, y] = WP[i];
+  return {
+    ghost: el(String(s.num), 'gate ghost', x - 29, y - 21),
+    halo: el('', 'halo', x - 60, y - 60),
+    gate: el(String(s.num), 'gate', x - 29, y - 21),
+    illus: el(s.img ? `<img class="illus" src="${s.img}">` : '', '', x - 95, y - 168),
+    text: el(`<div class="en">${s.label}</div><div class="t">${s.title}</div><div class="d">${s.desc}</div>` +
+             (CFG.noteLabel && s.note ? `<div class="m"><b>${CFG.noteLabel}</b>${s.note}</div>` : ''), 'step', x - (CW - 24) / 2, y + 40),
+  };
+});
+nodes.forEach(n => n.text.style.width = (CW - 24) + 'px');
+WP.forEach(([x, y]) => hole(x, y, 64, 48, 9)); hole(XS, Y1, 22, 22, 11);
+// halo sits under the gates and illustrations
+nodes.forEach(n => layer.insertBefore(n.halo, layer.firstChild));
+
+// ---- timeline ----
+const SPEED = CFG.speed || 520;   // px per second along the route
+const INTRO = 1.0, DWELL = CFG.dwell || 2.0, LAND = 1.0, OUTRO = 3.0;
+const ease = u => u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const legs = []; let t = INTRO, prev = 0;
+[...LEN, END].forEach((len, i) => {
+  const dur = Math.max(.7, (len - prev) / SPEED);
+  legs.push({ from: prev, to: len, t0: t, t1: t + dur, arrive: t + dur }); t += dur + (i < LEN.length ? DWELL : 0); prev = len;
+});
+const DURATION = t + LAND + OUTRO;
+window.DURATION = DURATION; window.SCENE_H = H;
+
+const plane = document.getElementById('plane');
+function render(T) {
+  // where is the plane along the route?
+  let s = 0;
+  for (const g of legs) { if (T >= g.t0) s = g.from + (g.to - g.from) * ease(clamp((T - g.t0) / (g.t1 - g.t0))); }
+  flown.style.strokeDashoffset = TOTAL - s;
+  const p = flown.getPointAtLength(s), q = flown.getPointAtLength(Math.min(TOTAL, s + 2)), o = flown.getPointAtLength(Math.max(0, s - 2));
+  const ang = Math.atan2(q.y - o.y, q.x - o.x) * 180 / Math.PI;
+  const landT = clamp((T - legs[legs.length - 1].arrive) / LAND);
+  plane.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${ang}) scale(${1 - .35 * landT})`);
+  plane.style.opacity = 1 - landT;
+  document.getElementById('pin').style.opacity = landT;
+  // steps
+  nodes.forEach((n, i) => {
+    const a = legs[i].arrive, u = T - a;
+    const pop = clamp(u / .28), rise = clamp((u - .12) / .45), txt = clamp((u - .3) / .45);
+    n.gate.style.opacity = pop; n.gate.style.transform = `scale(${.6 + .4 * ease(pop)})`;
+    n.ghost.style.opacity = 1 - pop;
+    n.illus.style.opacity = rise; n.illus.style.transform = `translateY(${14 * (1 - ease(rise))}px)`;
+    n.text.style.opacity = txt; n.text.style.transform = `translateY(${10 * (1 - ease(txt))}px)`;
+    const next = i + 1 < legs.length ? legs[i + 1].t0 : a + 99;     // halo while the plane is parked here
+    const hv = u >= 0 && T < next ? Math.sin(clamp(u / .5) * Math.PI / 2) * (.28 + .1 * Math.sin(u * 5)) : 0;
+    n.halo.style.opacity = TRANSPARENT ? 0 : hv;
+  });
+  PH.forEach(ph => { const u = T - legs[ph.from].arrive + .4; ph.node.style.opacity = clamp(u / .4); });
+}
+window.render = render;
+render(0);
+</script>
+</body>
+</html>

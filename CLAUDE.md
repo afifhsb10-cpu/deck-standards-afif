@@ -6,3 +6,4 @@ This repo holds the house standard for slide decks.
 - Deliverable decks go in `decks/<name>/` (the `.pptx`, its `build.js`, and the processed assets). Raw generated images and scratch renders stay out of git.
 - Default language for slide copy and speaker notes: Bahasa Indonesia, unless the user asks otherwise.
 - Never ship a deck that `check_pptx.py` reports errors on — PowerPoint will ask to repair it.
+- Animated GIF / video versions of a slide (to paste into PowerPoint, with or without background): follow `.claude/skills/deck-house-style/reference/animated-gif.md` and start from `templates/gif-route-strip/` or the closest deck in `decks/`.
